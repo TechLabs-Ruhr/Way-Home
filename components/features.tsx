@@ -23,7 +23,7 @@ export default function Features() {
                 <path className="stroke-current text-purple-300" d="M43 42h-9M43 37h-9" strokeLinecap="square" strokeWidth="2" />
               </svg>
               <h4 className="h4 mb-2">Safety First</h4>
-              <p className="text-lg text-gray-400 text-center">We prioritize your safety above all else. SafeWay Home will recommend routes that are well-lit,
+              <p className="text-lg text-gray-400 text-center">We prioritize your safety above all else. WayHome will recommend routes that are well-lit,
                bustling with people, and have excellent mobile coverage. Your well-being is our top concern</p>
             </div>
 
