@@ -12,11 +12,18 @@ import Testimonials from '@/components/testimonials'
 export default function Home() {
   return (
     <>
+    <div style={main}> 
       <Hero />
       <Features />
       <Zigzag />
-      <Testimonials />
+      <Testimonials />  
       <Newsletter />
+      </div>
     </>
   )
 }
+
+const main = {
+  backgroundColor: "#FCFDFD",
+  color: "black",
+} 
