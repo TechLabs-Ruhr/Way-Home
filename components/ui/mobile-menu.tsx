@@ -73,6 +73,14 @@ export default function MobileMenu() {
               Sign up
             </Link>
           </li>
+          <li>
+            <Link
+              href="/map"
+              className="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out" onClick={() => setMobileNavOpen(false)}
+            >
+              Map 
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

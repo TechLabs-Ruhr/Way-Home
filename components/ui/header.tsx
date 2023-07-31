@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import MobileMenu from './mobile-menu'
+import MobileMenu2 from './mobile-menu'
 import "./style.css"
 
 export default function Header() {
@@ -36,6 +37,7 @@ export default function Header() {
           </nav>
 
           <MobileMenu />
+          <MobileMenu2 />
 
         </div>
       </div>
