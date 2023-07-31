@@ -38,7 +38,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <Image className="max-w-full mx-auto md:max-w-none h-auto" src="/pictures/WomanWalkingHome.jpg" width={540} height={405} alt="Features 01" />
+          <Image className="max-w-full mx-auto md:max-w-none h-auto" data-aos="fade-up" data-aos-delay="800" src="/images/WomanWalkingHome.jpg" width={1040} height={552} alt="Features 01" />
 
 
 
