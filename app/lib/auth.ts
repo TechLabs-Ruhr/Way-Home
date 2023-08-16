@@ -4,8 +4,9 @@ import { db } from './db'
 import GoogleProvider from "next-auth/providers/google"
 
 function getGoogleCredentials() {
-    const clientId = process.env.GOOGLE_CLIENT_ID
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+    console.log("The function getGoogleCredentials was run")
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
     if(!clientId || clientId.length === 0) {
         throw new Error('Missing GOOGLE_CLIENT_ID')
@@ -16,18 +17,15 @@ function getGoogleCredentials() {
     }
 
     return {clientId, clientSecret}
-
 }
 
-
-
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = { //assigning a type to the authOptions constant 
     adapter: UpstashRedisAdapter(db),
     session: {
         strategy: 'jwt'
     },
     pages: {
-        signIn: '/login'
+        signIn: '/signin'
     },
     providers: [
         GoogleProvider({
