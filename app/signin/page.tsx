@@ -17,8 +17,8 @@ const Page: FC<pageProps> = ({}) => {
     console.log("I am runned")
     try{
       setIsLoading(true);
-      //throw new Error("doesn't matter")
-      await signIn('google')
+      //throw new Error("doesn't matter
+      await signIn('github')
     }catch(error) {
       toast.error("Something went wrong with your login")
     } setIsLoading(false)
