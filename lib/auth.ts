@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { db } from './db'
 import GoogleProvider from "next-auth/providers/google"
+//import { fetchRedis } from '@/helpers/redis'
 
 function getGoogleCredentials() {
     console.log("The function getGoogleCredentials was run")
@@ -22,10 +23,10 @@ function getGoogleCredentials() {
 export const authOptions: NextAuthOptions = { //assigning a type to the authOptions constant 
     adapter: UpstashRedisAdapter(db),
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
     },
     pages: {
-        signIn: '/signin'
+        signIn: '/signin', 
     },
     providers: [
         GoogleProvider({
@@ -60,6 +61,6 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
         }, 
         redirect() {
             return '/map'
-        }
+        },
     },
 }

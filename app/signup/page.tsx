@@ -4,10 +4,11 @@ export const metadata = {
 }
 
 import Link from 'next/link'
-import axios from 'axios';
+//import axios from 'axios';
 
 
 export default function SignUp() {
+  /*
   const handleRegister = async () => {
     try {
       await axios.post('/api/register', { email, password, username });
@@ -16,6 +17,7 @@ export default function SignUp() {
       console.error('Registration error:', error);
     }
   };
+  */
 
 
   return (

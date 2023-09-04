@@ -1,4 +1,4 @@
-import { db } from '@/app/lib/db'
+import { db } from '@/lib/db'
 
 export const metadata = {
   title: 'Home - Open PRO',
