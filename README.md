@@ -14,22 +14,26 @@ By the end you should have filled out the following:
 
 # Way Home
 
-Description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+We're not just another navigation app. We're a safety-first solution dedicated to empowering you to
+feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
+territories with confidence!
 
 
 ## How to Setup and Run
 
-In order to setup the project, please proceed as follows:
+In order to set up the project, please proceed as follows:
 
-```bash
-  npm install my-project
-```
+1. Download node.js, and install the npm package manager
+2. Download VS Code and Git (For a more detailed description of setting up GitHub and VS Code use the respective Guide in  our ClickUp documentation)
 
-After successful installation use the following command to run the project:
+After successful installation you have to go through the following steps to run the project:
+1. Clone the project repository
+2. open the command line in vs code. Make sure that you're in the right folder (It should be the folder where you saved the app files from GitHub on your PC)
+3. Use the command line: "npm install"
+4. Use the command line: "npm run dev"
+5. Open the following link http://localhost:3000/ in your browser
 
-```bash
-  npm run
-```
+
 ## Examples
 
 You can see a brief overview of how to use the main functionality below
