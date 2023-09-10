@@ -6,7 +6,6 @@ const page = async ({}) => {
 
   const session = await getServerSession(authOptions)
   return (
-    <div>
     <div style={{backgroundColor: "whitesmoke"}}>
       <h1>My Page</h1>
       <pre> {JSON.stringify(session)}</pre>
