@@ -2,8 +2,10 @@ import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from "@/lib/auth"
 import { db } from '@/lib/db'
 import { addFriendValidator } from "@/lib/validations/add-friend"
+import { log } from 'console'
 import { getServerSession } from "next-auth"
 import {z} from "zod"
+import fetchUserByEmail from '@/app/helpers/fetchUsersByEmail';
 
 export async function POST(req: Request) {
     try {
@@ -11,9 +13,12 @@ export async function POST(req: Request) {
 
         const {email: emailToAdd} = addFriendValidator.parse(body.email) // if this parse fails a z error is going to be thrown
 
-        console.log("The email being passed is: " + emailToAdd)
+        console.log("The email that is passed is: " + emailToAdd)
 
         const idToAdd = (await fetchRedis('get', `user:email:${emailToAdd}`)) as string
+
+        //const idToAdd = await fetchUserByEmail(emailToAdd);
+
 
         console.log(`The id that is passed is: ${idToAdd}`)
 
@@ -21,7 +26,6 @@ export async function POST(req: Request) {
             return new Response('This person does not exist', {status: 400} )
         }
 
-        
 
         const session = await getServerSession(authOptions)
 
@@ -58,7 +62,8 @@ export async function POST(req: Request) {
         }
         
           //valid request, send friend request
-
+        console.log("A request will be sent ");
+        
           db.sadd(`user${idToAdd}:incoming_friend_requests`, session.user.id)
 
           return new Response("OK")
@@ -67,6 +72,7 @@ export async function POST(req: Request) {
         if(error instanceof z.ZodError) {
             return new Response('Invalid request payload')
         }
+        console.log(error);
         return new Response('Invalid request payload', {status: 422})
     }
 }
