@@ -5,8 +5,8 @@ import {FC} from "react"
 const Page: FC = ({}) => {
     return (
     <>
-      <h1 className="font-bold text-5xl mb-8">All contacts  </h1>
-      <a> <span>Find new People</span></a>
+      <h1 className="font-bold text-5xl mb-8">Dashboard </h1>
+      <a> </a>
     </>
     )
   }

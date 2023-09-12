@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { FC, ReactNode } from 'react'
 import Image from 'next/image';
 import SignOutButton from '@/components/ui/SignOutButton';
+import FriendRequestSidebarOptions from '@/components/FriendRequestSidebarOptions';
+import { fetchRedis } from '@/helpers/redis';
 
 
 interface LayoutProps {
@@ -28,6 +30,13 @@ const sidebarOptions: SidebarOption[] = [
 const Layout = async ({children}: LayoutProps) => {
     const session = await getServerSession(authOptions)
     if(!session) notFound() 
+
+    const unseenRequestCount = (
+        await fetchRedis('smembers', 
+        `user:${session.user.id}:incoming_friend_requests`
+        ) as User []
+        ).length
+
     return <div className='w-full flex h-screen'>
         <div className='flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 '>
         <Link href='/dashboard' className='flex h-16 shirnk-0 items-center'></Link> 
@@ -50,7 +59,9 @@ const Layout = async ({children}: LayoutProps) => {
                             <li key={option.id}>
                                 <Link href={option.href} className='text-gray-700 hover:text-blue-50 group flex gap-3 rounded-md p-2 text-sm leading-semibold'>
                                     <span className='text-gray-400 border-gray-200 group-hover:border-blue-600 group-hover:text-blue-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium bg-white'>
-                                        logo
+                                    <svg xmlns="http://www.w3.org/2000/svg" className='w-6 h-6 mb-1' height="1em" viewBox="0 0 640 512">
+                                        <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
+                                    </svg>
                                     </span>
                                     <span className='truncate'>{option.name}</span>
                                 </Link>
@@ -58,6 +69,9 @@ const Layout = async ({children}: LayoutProps) => {
                             )
                         })}
                     </ul>
+                </li>
+                <li>
+                    <FriendRequestSidebarOptions sessionId={session.user.id} initialUnseenRequestCount={unseenRequestCount}/>
                 </li>
                 <li className='-mx-6 mt-auto flex items-center'>
                     <div className='flex flex-1 items-center gap-x-4 px-6 py-3 tex-sm font-semibold leading-6 text-gray-900'>
@@ -75,7 +89,7 @@ const Layout = async ({children}: LayoutProps) => {
                             <span className='text-xs text-zinc-400' aria-hidden='true'>{ session.user.email}</span>    
                         </div>
                      </div>
-                     <SignOutButton /*className='h-full aspect-square'/*//>
+                     <SignOutButton />
                 </li>
             </ul>
         </nav>
