@@ -1,3 +1,4 @@
+import { User } from '@/app/types/db'
 import AddFriendButton from '@/components/ui/AddFriendButton'
 import FriendRequests from '@/components/ui/FriendRequests'
 import { fetchRedis } from '@/helpers/redis'
