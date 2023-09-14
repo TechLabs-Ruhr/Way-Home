@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         await db.sadd(`user:${session.user.id}:friends`, idToAdd) // we don't have to worry about cashing behavior because post request are not cashed in next.js
 
         // add the user to the requester friend list
-        await db.sadd(`user:${idToAdd}:friend`, session.user.id) 
+        await db.sadd(`user:${idToAdd}:friends`, session.user.id) 
 
         // clean up the friend requests 
         await db.srem(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
