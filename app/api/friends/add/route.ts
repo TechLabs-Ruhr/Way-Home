@@ -6,6 +6,8 @@ import { log } from 'console'
 import { getServerSession } from "next-auth"
 import {z} from "zod"
 import fetchUserByEmail from '@/app/helpers/fetchUsersByEmail';
+import { pusherServer } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/validations/utils'
 
 export async function POST(req: Request) {
     try {
@@ -60,8 +62,20 @@ export async function POST(req: Request) {
         if (isAlreadyFriends) {
             return new Response('Already Friends with this user')
         }
+
+        //valid request, send friend request
+        console.log("trigger pusher")
+        pusherServer.trigger(
+            toPusherKey(`user${idToAdd}:incoming_friend_requests`),
+             'incoming_friend_requests', // actual function named that we're triggering
+            {
+                senderId:session.user.id,
+                senderEmail: session.user.email,
+            } 
+        )
         
-          //valid request, send friend request
+        
+          
         console.log("A request will be sent ");
         
           db.sadd(`user${idToAdd}:incoming_friend_requests`, session.user.id)

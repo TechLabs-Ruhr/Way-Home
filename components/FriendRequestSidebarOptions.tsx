@@ -1,11 +1,31 @@
 'use client'
+import { pusherClient } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/validations/utils'
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 interface FrriendRequestSidebarOptionsProps {
   sessionId: string
   initialUnseenRequestCount: number
 }
+
+/* useEffect(() => {
+  pusherClient.subscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`)) // we use the helper function to bypass the colon  that is invalid inside the subscribe method
+
+  console.log("subscriberd to ", `user:${sessionId}:incoming_friend_requests`)
+
+  const friendRequestHandler = ({senderId, senderEmail}: IncomingFriendRequest) => {
+      console.log("new friend request ")
+      setFriendRequests((prev) => [...prev, {senderId, senderEmail}]) // get access to the friend request in real time 
+  }
+  pusherClient.bind('incoming_friend_requests', friendRequestHandler)
+
+  return () => {
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`)) // we use the helper function to bypass the colon  that is invalid inside the subscribe method
+      pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
+
+  }
+}, []) */
 
 const FrriendRequestSidebarOptions: FC<FrriendRequestSidebarOptionsProps> = ({
   sessionId,

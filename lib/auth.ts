@@ -119,7 +119,7 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
             return session
         }, 
         redirect() {
-            return '/map'
+            return '/dashboard'
         },
     },
 }
