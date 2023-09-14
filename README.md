@@ -1,4 +1,37 @@
-## TODO for the Techies
+
+
+## Way Home
+## Find the safest route to your desired destination
+
+We're not just another navigation app. We're a safety-first solution dedicated to empowering you to
+feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
+territories with confidence!
+
+### How to Setup and Run
+
+In order to set up the project, please proceed as follows:
+
+1 Download node.js, and install the npm package manager
+2. Download VS Code and Git (For a more detailed description of setting up GitHub and VS Code use the respective Guide in  our ClickUp documentation)
+
+After successful installation you have to go through the following steps to run the project:
+1. Clone the project repository
+2. open the command line in vs code. Make sure that you're in the right folder (It should be the folder where you saved the app files from GitHub on your PC)
+3. Use the command line: "npm install"
+4. Use the command line: "npm run dev"
+5. Open the following link http://localhost:3000/ in your browser
+
+### Roadmap
+
+1. **Implement the landing** - one of our first steps was to create an enticing landing page to encourage new users to use the app.
+2. **Connect the App to the google maps API** - to implement the core app features like route recommendations we had to access the google maps API
+3. **Authentication** - we used next auth to implement the OAuth with Github and Google to create new user accounts 
+4. **Implement the chat feature** - Currently the most complex feature of our application it consists of:
+   1. User dashboard with sign out function
+   2. Sending, receiving and denying friend requests
+   3. Sending and receiving text messages 
+
+   
 Please **fill out the following information below**, as soon as possible. It is **required** to have this file completely filled out and up to date at the end of the project phase.
 You can of course use this file to manage your project, e.g. as a place to keep your todos and to plan your features. Also, feel free to edit this readme in any kind of way you like, but the required base layout and information should be consistent throughout all techie projects.
 
@@ -14,24 +47,7 @@ By the end you should have filled out the following:
 
 # Way Home
 
-We're not just another navigation app. We're a safety-first solution dedicated to empowering you to
-feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
-territories with confidence!
 
-
-## How to Setup and Run
-
-In order to set up the project, please proceed as follows:
-
-1. Download node.js, and install the npm package manager
-2. Download VS Code and Git (For a more detailed description of setting up GitHub and VS Code use the respective Guide in  our ClickUp documentation)
-
-After successful installation you have to go through the following steps to run the project:
-1. Clone the project repository
-2. open the command line in vs code. Make sure that you're in the right folder (It should be the folder where you saved the app files from GitHub on your PC)
-3. Use the command line: "npm install"
-4. Use the command line: "npm run dev"
-5. Open the following link http://localhost:3000/ in your browser
 
 
 ## Examples
@@ -47,16 +63,11 @@ function App() {
 ```
 
   
-## Roadmap
-
-- Additional browser support
-- Add more integrations
-
   
-## Authors
+### Authors
 
-- [@bob](https://www.github.com/bob)
-- [@alice](https://www.github.com/alice)
+- [@Mariusz Seget]([https://www.github.com/bob](https://github.com/Isztof))
+- [@Lukas Jazwinski](https://github.com/Lumpays)
 
   
 
