@@ -8,8 +8,8 @@ import { db } from '@/lib/db'
 import { messageArrayValidator } from '@/lib/validations/message'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
-import { FC } from 'react'
 import Image from 'next/image'
+import Messages from "@/components/userDashboard/Messages"
 
 interface pageProps {
   params: {
@@ -56,7 +56,10 @@ const page = async ({params}: pageProps) => {
   }
 
   const chatPartnerId = user.id === userId1 ? userId2 : userId1
-  const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User
+
+  const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User // edit later to chat partner raw
+
+
   const initialMessages = await getChatMessages(chatId)
 
   // chat/userid1--userid2 this is how we gonna construct the url for one certain chat 
@@ -86,6 +89,7 @@ const page = async ({params}: pageProps) => {
           </div>
         </div>
       </div>
+      <Messages sessionId={session.user.id} initialMessages={initialMessages}/>
     </div>
   );  
 }
