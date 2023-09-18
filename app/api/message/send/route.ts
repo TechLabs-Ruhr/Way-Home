@@ -41,7 +41,7 @@ export async function POST(req: Request) {
         console.log("sender", sender) 
         // all valid, send the message
 
-        /* const messageData: Message = {
+         const messageData: Message = {
             id: nanoid(),
             senderId: session.user.id,
             text,
@@ -56,13 +56,14 @@ export async function POST(req: Request) {
         await db.zadd(`chat:${chatId}:messages`, {
             score: timestamp,
             member: JSON.stringify(message)
-        }) */
+        }) 
 
         return new Response('OK') 
     } catch (error) {
         if(error instanceof Error) {
             return new Response(error.message, { status: 500})
         }
+        return new Response("Internal Server Error", {status:500})
     }
 
     //testing takes place in the section: summary: messages functionality is working 

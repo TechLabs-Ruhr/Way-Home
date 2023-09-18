@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+//landing page
 
 export const metadata = {
   title: 'Home - Open PRO',
@@ -12,7 +12,7 @@ import Zigzag from '@/components/landingPage/zigzag'
 import Testimonials from '@/components/landingPage/testimonials'
 
 export default async function Home() {
-  await db.set('hello', 'hello');
+
 
   return (
     <>

@@ -38,14 +38,9 @@ export default function Header() {
           </nav>
 
           <MobileMenu />
-          <MobileMenu2 />
-
         </div>
       </div>
     </header>
   )
 }
 
-const button = {
-  backgroundColor:  "#0073e6",
-}
