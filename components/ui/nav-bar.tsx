@@ -6,8 +6,8 @@ import { useRouter } from 'next/router';
 
 
 export default function navBar() {
-  const router = useRouter(); // Get the router instance
-
+/*   const router = useRouter(); // Get the router instance
+ */
   return (
     <header className="absolute w-full z-30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -30,14 +30,14 @@ export default function navBar() {
                 </Link> 
               </li>
               <li >
-                  {router.pathname === '/' ? 
+                {/*   {router.pathname === '/' ? 
                     <Link  href="/dashboard" className="font-medium text-blue-600 hover:bg-grey-600 px-4 py-3 flex items-center transition duration-150 ease-in-out">
                     Dashboard
                   </Link> 
-                   : null}
+                   : null} */}
               </li>
               <li >
-              {router.pathname === '/' ? 
+             {/*  {router.pathname === '/' ? 
                      <Link
                      href="/signin"
                     className='btn text-white bg-blue-500 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0'>
@@ -45,13 +45,13 @@ export default function navBar() {
                    </Link>
                    : null}
                
-              </li>
+              </li> */}
              {/*  <li >
                {/*  <Link  href="/signup" className="button">
                   Sign up
-                </Link> 
-              </li> */}
-            </ul>
+                </Link> */}
+              </li> 
+              </ul>
           </nav>
 
           <MobileMenu />
