@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { FC, ReactNode } from 'react'
 import Image from 'next/image';
 import SignOutButton from '@/components/ui/SignOutButton';
-import FriendRequestSidebarOptions from '@/components/FriendRequestSidebarOptions';
+import FriendRequestSidebarOptions from '@/components/userDashboard/FriendRequestSidebarOptions';
 import { fetchRedis } from '@/helpers/redis';
 import { User } from '@/app/types/db';
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id';
-import SidebarChatList from '@/components/SidebarChatList';
+import SidebarChatList from '@/components/userDashboard/SidebarChatList';
 
 
 
