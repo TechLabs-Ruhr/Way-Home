@@ -35,12 +35,11 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const session = await getServerSession(authOptions)
-  console.log("session: ", session)
   return (
     <html lang="en">
       <body className={`${inter.variable} ${architects_daughter.variable} font-inter antialiased  text-gray-200 tracking-tight`}>
         <div className="flex flex-col min-h-screen overflow-hidden">
-          <NavBar/>
+          {/* <NavBar session={session}/> */}
           <Providers> {children}</Providers>
         </div>
       </body>
