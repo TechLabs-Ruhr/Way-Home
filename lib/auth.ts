@@ -5,44 +5,7 @@ import { db } from './db'
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchRedis } from "@/helpers/redis";
-//import { fetchRedis } from '@/helpers/redis'
-
-/*
-function getGitHubCredentials() {
-    console.log("The function getGoogleCredentials was run")
-    
-    clientId: process.env.GITHUB_ID,
-    clientSecret: process.env.GITHUB_SECRET
-
-
-    if(!clientId || clientId.length === 0) {
-        throw new Error('Missing GOOGLE_CLIENT_ID')
-    }
-    
-    if(!clientSecret || clientSecret.length === 0) {
-        throw new Error('Missing GOOGLE_CLIENT_SECRET')
-    }
-
-    return {clientId, clientSecret}
-}
-*/
-function getGoogleCredentials() {
-    console.log("The function getGoogleCredentials was run")
-    
-    const clientId = process.env.GOOGLE_CLIENT_ID;
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-
-
-    if(!clientId || clientId.length === 0) {
-        throw new Error('Missing GOOGLE_CLIENT_ID')
-    }
-    
-    if(!clientSecret || clientSecret.length === 0) {
-        throw new Error('Missing GOOGLE_CLIENT_SECRET')
-    }
-
-    return {clientId, clientSecret}
-}
+import GoogleProvider from "next-auth/providers/google"
 
 
 export const authOptions: NextAuthOptions = { //assigning a type to the authOptions constant 
@@ -57,6 +20,10 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
         GitHubProvider({
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
         CredentialsProvider( {
             name: "Credentials",
@@ -84,11 +51,6 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
             }
             
         })
-        /*
-        GoogleProvider({
-            clientId: getGoogleCredentials().clientId,
-            clientSecret: getGoogleCredentials().clientSecret,
-        })*/
     ],
     callbacks: {
         async jwt ({token, user}) {

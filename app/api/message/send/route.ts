@@ -38,7 +38,6 @@ export async function POST(req: Request) {
         
         const timestamp = Date.now()
 
-        console.log("sender", sender) 
         // all valid, send the message
 
          const messageData: Message = {

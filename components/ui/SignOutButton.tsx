@@ -67,7 +67,7 @@ interface SignOutButtonProps {
         ) : (
           <button 
           onClick={signOutFunction}
-          className="font-medium text-blue-600 hover:bg-grey-600 px-4 py-3 flex items-center transition duration-150 ease-in-out">
+          className="btn text-white bg-blue-500 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0">
             Sign out
         </button>
         )}

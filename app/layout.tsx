@@ -2,7 +2,7 @@ import './css/style.css'
 
 import { Inter, Architects_Daughter } from 'next/font/google'
 
-import NavBar from '@/components/ui/nav-bar'
+import NavBar from '@/components/ui/nav-barHome'
 import Providers from '@/components/ui/Providers'
 import  { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -39,7 +39,6 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${architects_daughter.variable} font-inter antialiased  text-gray-200 tracking-tight`}>
         <div className="flex flex-col min-h-screen overflow-hidden">
-          {/* <NavBar session={session}/> */}
           <Providers> {children}</Providers>
         </div>
       </body>
