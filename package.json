@@ -36,6 +36,7 @@
     "react-textarea-autosize": "^8.5.3",
     "tailwind-merge": "^1.14.0",
     "typescript": "^5.0.4",
+    "uuid": "^9.0.1",
     "zod": "^3.22.2"
   },
   "devDependencies": {

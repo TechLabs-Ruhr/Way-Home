@@ -5,38 +5,51 @@ export const metadata = {
   description: 'Page description',
 }
 
+import { addFriendValidator } from '@/lib/validations/add-friend'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 //import axios from 'axios';
 
 
 export default function SignUp() {
   const router = useRouter()
+
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: ''
   })
-  /*
-  const handleRegister = async () => {
-    try {
-      await axios.post('/api/register', { email, password, username });
-      router.push('/login');
-    } catch (error) {
-      console.error('Registration error:', error);
-    }
+
+
+  const registerUser = async (e: FormEvent) => {
+    const form = new FormData(e.target as HTMLFormElement);
+    e.preventDefault();
+  // Assign values to the data object
+  const formData = {
+    firstName: String(form.get('firstName')),
+    lastName: String(form.get('lastName')),
+    email: String(form.get('email')),
+    password: String(form.get('password')),
   };
-  */
+  console.log("from Data:", formData)
 
-  const registerUser = async () => {
-    //e.preventDefault()
-    const response = await axios.post('api/signup', {
-      //email: validatedEmail
-    })
-
+     const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(formData)
+      })
+      if (res.ok) {
+        // Handle success, e.g., redirect or display a success message
+        console.log('Registration successful');
+      } else {
+        // Handle errors, e.g., display an error message
+        console.error('Registration failed');
+      }
   }
 
   return (
@@ -98,7 +111,7 @@ export default function SignUp() {
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="first-name">First Name <span className="text-red-600">*</span></label>
-                  <input id="first-name" type="text"
+                  <input id="first-name" type="text" name='firstName'
                     onChange={(e) => {setData({...data, firstName: e.target.value})}}
                     className="form-input w-full text-gray-300" placeholder="Your username" required />
                 </div>
@@ -106,7 +119,7 @@ export default function SignUp() {
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="last-name">Last Name <span className="text-red-600">*</span></label>
-                  <input id="last-name" type="text" 
+                  <input id="last-name" type="text" name='lastName'
                     onChange={(e) => {setData({...data, lastName: e.target.value})}}
                     className="form-input w-full text-gray-300" placeholder="Your username" required />
                 </div>
@@ -114,7 +127,7 @@ export default function SignUp() {
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">E-mail <span className="text-red-600">*</span></label>
-                  <input id="email" type="email" 
+                  <input id="email" type="email" name='email' 
                     onChange={(e) => {setData({...data, email: e.target.value})}}
                     className="form-input w-full text-gray-300" placeholder="Your e-mail" required />
                 </div>
@@ -122,7 +135,7 @@ export default function SignUp() {
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="password">Password <span className="text-red-600">*</span></label>
-                  <input id="password" type="password"
+                  <input id="password" type="password"name='password'
                     onChange={(e) => {setData({...data, firstName: e.target.value})}}
                     className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
                 </div>

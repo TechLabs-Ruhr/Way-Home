@@ -6,7 +6,14 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchRedis } from "@/helpers/redis";
 import GoogleProvider from "next-auth/providers/google"
+import { z } from "zod";
 
+const loginUserSchema = z.object({
+    firstName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid first name'),
+    lastName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid last name'),
+    email: z.string().email(),
+    password: z.string().min(5, 'Password should have at least 5 characters'),
+  })
 
 export const authOptions: NextAuthOptions = { //assigning a type to the authOptions constant 
     adapter: UpstashRedisAdapter(db),
@@ -28,10 +35,10 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
         CredentialsProvider( {
             name: "Credentials",
             credentials: {
-                username: {
-                    label: "Username:",
+                email: {
+                    label: "email",
                     type: "text",
-                    placeholder: "your-coolusername"
+                    placeholder: "yourFirstName"
                 },
                 password: {
                     label: "Password",
@@ -39,17 +46,40 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
                     placeholder: "your-awesome-password"
                 }
             },
-            async authorize(credentials) {
+            async authorize(credentials, req) {
                 //Here is where user data needs to be retrieved  
-                const user = { id: "23", name: "Mariusz", password: "password"}
+                try {
+                    // Parse user credentials
+                const {email, password} = loginUserSchema.parse(credentials)
+                // Fetch the user data from Redis based on the email
+                const userDataKey = `name:${email}`;
+                const userData = await fetchRedis('get', userDataKey);
 
-                if(credentials?.username === user.name && credentials?.password === user.password) {
-                    return user
-                } else {
-                    return null
+                if(!userData) {
+                    // User with the given email does not exist
+                    return null;
                 }
-            }
-            
+                // Parse the user data from Redis (assuming it's stored as a JSON string)
+                const userDataObj = JSON.parse(userData);
+                // Check if the password matches
+                if (userDataObj.password === password) {
+                    // Return the user object with at least an email property
+                    const user: User = {
+                        id: userDataObj.id,
+                        email: userDataObj.email,
+                        // Add other relevant user properties here
+                      };
+                      return user;
+                } else {
+                    // Password does not match
+                    return null;
+                }
+                } catch (error) {
+                    // Handle errors, e.g., log them or return null
+                    console.error('Error during authorization:', error);
+                    return null;
+                }
+            }  
         })
     ],
     callbacks: {
