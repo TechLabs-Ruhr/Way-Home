@@ -1,13 +1,25 @@
+"use client"
+
 export const metadata = {
-  title: 'Sign Up - Open PRO',
+  title: 'Way Home Sign Up',
   description: 'Page description',
 }
 
+import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 //import axios from 'axios';
 
 
 export default function SignUp() {
+  const router = useRouter()
+  const [data, setData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  })
   /*
   const handleRegister = async () => {
     try {
@@ -19,6 +31,13 @@ export default function SignUp() {
   };
   */
 
+  const registerUser = async () => {
+    //e.preventDefault()
+    const response = await axios.post('api/signup', {
+      //email: validatedEmail
+    })
+
+  }
 
   return (
     <div style={{backgroundColor: 'whitesmoke', color: 'black'}}> 
@@ -75,23 +94,37 @@ export default function SignUp() {
               <div className="text-gray-400">Or, register with your email</div>
               <div className="border-t border-gray-700 border-dotted grow ml-3" aria-hidden="true"></div>
             </div>
-            <form>
+            <form onSubmit={registerUser}>
+            <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full px-3">
+                  <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="first-name">First Name <span className="text-red-600">*</span></label>
+                  <input id="first-name" type="text"
+                    onChange={(e) => {setData({...data, firstName: e.target.value})}}
+                    className="form-input w-full text-gray-300" placeholder="Your username" required />
+                </div>
+              </div>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
-                  <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="full-name">Username <span className="text-red-600">*</span></label>
-                  <input id="full-name" type="text" className="form-input w-full text-gray-300" placeholder="Your username" required />
+                  <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="last-name">Last Name <span className="text-red-600">*</span></label>
+                  <input id="last-name" type="text" 
+                    onChange={(e) => {setData({...data, lastName: e.target.value})}}
+                    className="form-input w-full text-gray-300" placeholder="Your username" required />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">E-mail <span className="text-red-600">*</span></label>
-                  <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="Your e-mail" required />
+                  <input id="email" type="email" 
+                    onChange={(e) => {setData({...data, email: e.target.value})}}
+                    className="form-input w-full text-gray-300" placeholder="Your e-mail" required />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="password">Password <span className="text-red-600">*</span></label>
-                  <input id="password" type="password" className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
+                  <input id="password" type="password"
+                    onChange={(e) => {setData({...data, firstName: e.target.value})}}
+                    className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
                 </div>
               </div>
               <div className="text-sm text-gray-500 text-center">
@@ -99,7 +132,9 @@ export default function SignUp() {
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button className="btn text-white bg-blue-600 hover:bg-purple-700 w-full">Sign up</button>
+                  <button 
+                    type='submit'
+                    className="btn text-white bg-blue-600 hover:bg-purple-700 w-full">Sign up</button>
                 </div>
               </div>
             </form>

@@ -11,7 +11,7 @@ const nextConfig = {
         UPSTASH_REDIS_REST_TOKEN: localEnv.UPSTASH_REDIS_REST_TOKEN,
        },
        images: {
-        domains: ['avatars.githubusercontent.com']
+        domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com']
        }
 }
 
