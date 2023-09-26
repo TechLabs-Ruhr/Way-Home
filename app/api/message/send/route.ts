@@ -64,6 +64,4 @@ export async function POST(req: Request) {
         }
         return new Response("Internal Server Error", {status:500})
     }
-
-    //testing takes place in the section: summary: messages functionality is working 
 }

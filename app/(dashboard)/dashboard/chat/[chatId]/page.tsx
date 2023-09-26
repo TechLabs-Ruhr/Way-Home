@@ -1,6 +1,5 @@
 // this page was declared under a dynamic router structure [chatId]
 
-
 import { Message, User } from '@/app/types/db'
 import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from '@/lib/auth'
@@ -26,6 +25,8 @@ async function getChatMessages(chatId: string) {
             0,
             -1 // fetch all messages
         )
+
+        console.log("result messages: ", result)
 
         const dbMessages = result.map((message) => JSON.parse(message) as Message)
 
@@ -90,7 +91,9 @@ const page = async ({params}: pageProps) => {
           </div>
         </div>
       </div>
-      <Messages sessionId={session.user.id} initialMessages={initialMessages} sessionImg={session.user.image} chatPartner={chatPartner}/>
+      <div className="min-h-[75vh]">
+        <Messages sessionId={session.user.id} initialMessages={initialMessages} sessionImg={session.user.image} chatPartner={chatPartner}/>
+      </div>
       <ChatInput chatId={chatId} chatPartner={chatPartner}/> 
     </div>
   );  
