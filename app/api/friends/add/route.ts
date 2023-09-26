@@ -15,14 +15,9 @@ export async function POST(req: Request) {
 
         const {email: emailToAdd} = addFriendValidator.parse(body.email) // if this parse fails a z error is going to be thrown
 
-        console.log("The email that is passed is: " + emailToAdd)
-
+    
         const idToAdd = (await fetchRedis('get', `user:email:${emailToAdd}`)) as string
-
-        //const idToAdd = await fetchUserByEmail(emailToAdd);
-
-
-        console.log(`The id that is passed is: ${idToAdd}`)
+        console.log("idToAdd: ", idToAdd)
 
         if(!idToAdd) {
             return new Response('This person does not exist', {status: 400} )
@@ -34,9 +29,6 @@ export async function POST(req: Request) {
         if(!session) {
             return new Response('Unauthorized', {status: 401})
         }
-
-
-        //const data = await RESTResponse.json() as {result: string}
         
 
         if(idToAdd === session.user.id) {
@@ -51,7 +43,6 @@ export async function POST(req: Request) {
          if (isAlreadyAddded) {
              return new Response('Already added this user', {status: 400})
          }
-        //const idToAdd = data.result
 
           //check if user is already in the friends list 
           const isAlreadyFriends = (await fetchRedis(
@@ -64,7 +55,6 @@ export async function POST(req: Request) {
         }
 
         //valid request, send friend request
-        console.log("trigger pusher")
         pusherServer.trigger(
             toPusherKey(`user${idToAdd}:incoming_friend_requests`),
              'incoming_friend_requests', // actual function named that we're triggering
@@ -73,10 +63,6 @@ export async function POST(req: Request) {
                 senderEmail: session.user.email,
             } 
         )
-        
-        
-          
-        console.log("A request will be sent ");
         
           db.sadd(`user${idToAdd}:incoming_friend_requests`, session.user.id)
 

@@ -38,7 +38,6 @@ export async function POST(req: Request) {
         
         const timestamp = Date.now()
 
-        console.log("sender", sender) 
         // all valid, send the message
 
          const messageData: Message = {
@@ -65,6 +64,4 @@ export async function POST(req: Request) {
         }
         return new Response("Internal Server Error", {status:500})
     }
-
-    //testing takes place in the section: summary: messages functionality is working 
 }

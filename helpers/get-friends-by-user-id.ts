@@ -4,7 +4,6 @@ import { fetchRedis } from "./redis"
 export const getFriendsByUserId = async (userId: string) => {
     //retrieve friends for current user 
     const friendIds = await fetchRedis('smembers', `user:${userId}:friends`) as string[]
-    console.log("friendsIds from get friends by user id file ", friendIds)
 
     const friends = await Promise.all( // we're quering all the friends simultaneusly 
         friendIds.map(async (friendId) =>  {

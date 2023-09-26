@@ -71,6 +71,7 @@ export default function Testimonials() {
           </div>
 
         </div>
+        <div className="py-12 md:py-20 border-b border-gray-800"></div>
       </div>
     </section>
   )
