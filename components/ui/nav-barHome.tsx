@@ -28,7 +28,7 @@ const NavBarHome: FC<NavBarHomeProps> = ({
           <nav className="hidden md:flex md:grow">
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
-                  <Link  href="/dashboard" className="font-medium text-blue-600 hover:bg-grey-600 px-4 py-3 flex items-center transition duration-150 ease-in-out">
+                  <Link  href="/dashboard" className="font-medium text-blue-600 hover:bg-gray-600 px-4 py-3 flex items-center transition duration-150 ease-in-out">
                     Dashboard
                   </Link> 
               </li>
@@ -38,15 +38,16 @@ const NavBarHome: FC<NavBarHomeProps> = ({
                    : 
                 <Link
                    href="/signin"
-                   className='btn text-white bg-blue-500 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0'>
+                   className='font-medium text-blue-600 hover:bg-gray-600 px-4 py-3 flex items-center transition duration-150 ease-in-out'>
                    Sign in
                  </Link>}
                
               </li> 
-             {/*  <li >
-               {/*  <Link  href="/signup" className="button">
+               <li >
+                 <Link  href="/signup" className="btn text-white bg-blue-500 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0">
                   Sign up
-                </Link> */}
+                </Link> 
+                </li>
               </ul>
           </nav>
           <MobileMenu />

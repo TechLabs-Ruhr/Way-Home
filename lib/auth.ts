@@ -7,6 +7,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchRedis } from "@/helpers/redis";
 import GoogleProvider from "next-auth/providers/google"
 import { z } from "zod";
+var bcrypt = require('bcryptjs');
+
+
+interface LoginCredentials {
+    email: string;
+    password: string;
+  }
 
 const loginUserSchema = z.object({
     firstName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid first name'),
@@ -38,7 +45,7 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
                 email: {
                     label: "email",
                     type: "text",
-                    placeholder: "yourFirstName"
+                    placeholder: "yourEmail"
                 },
                 password: {
                     label: "Password",
@@ -47,53 +54,61 @@ export const authOptions: NextAuthOptions = { //assigning a type to the authOpti
                 }
             },
             async authorize(credentials, req) {
-                //Here is where user data needs to be retrieved  
-                try {
-                    // Parse user credentials
-                const {email, password} = loginUserSchema.parse(credentials)
+            try {
+               if(!credentials?.email || !credentials.password) {
+                return null
+               }
+                // Parse user credentials from the login form
+                const email = credentials.email;
+                const password = credentials.password;
+
                 // Fetch the user data from Redis based on the email
-                const userDataKey = `name:${email}`;
+                const userDataKey = `user:${email}`;
                 const userData = await fetchRedis('get', userDataKey);
 
-                if(!userData) {
-                    // User with the given email does not exist
-                    return null;
+                if (!userData) {
+                // User with the given email does not exist
+                console.log(("The user with the given email does not exist"))
+                return null;
                 }
-                // Parse the user data from Redis (assuming it's stored as a JSON string)
+
+                // Parse the user data from Redis 
                 const userDataObj = JSON.parse(userData);
+
                 // Check if the password matches
-                if (userDataObj.password === password) {
-                    // Return the user object with at least an email property
-                    const user: User = {
-                        id: userDataObj.id,
-                        email: userDataObj.email,
-                        // Add other relevant user properties here
-                      };
-                      return user;
+                const isPasswordValid = await bcrypt.compare(credentials.password, userDataObj.password)
+                
+                if (isPasswordValid) {
+                // Return the user object 
+                const user = {
+                    id: userDataObj.id,
+                    email: userDataObj.email,
+                    name: userDataObj.firstName,
+                    picture: userDataObj.image,
+                };
+              
+                return user;
                 } else {
-                    // Password does not match
-                    return null;
+                // Password does not match
+                throw new Error('invalid credentials')
                 }
-                } catch (error) {
-                    // Handle errors, e.g., log them or return null
-                    console.error('Error during authorization:', error);
-                    return null;
-                }
-            }  
-        })
-    ],
+            } catch (error) {
+                console.error('Error during authorization:', error);
+                return null;
+            }
+        },
+
+    })],
     callbacks: {
         async jwt ({token, user}) {
             const dbUserResult = await fetchRedis('get', `user:${token.id}`) as
             | string
             | null
-
             if(!dbUserResult) {
                 token.id = user!.id
                 return token
             }
             const dbUser = JSON.parse(dbUserResult) as User
-
             return {
                 id: dbUser.id,
                 name: dbUser.name,

@@ -17,6 +17,7 @@ export async function POST(req: Request) {
 
     
         const idToAdd = (await fetchRedis('get', `user:email:${emailToAdd}`)) as string
+        console.log("idToAdd: ", idToAdd)
 
         if(!idToAdd) {
             return new Response('This person does not exist', {status: 400} )

@@ -6,7 +6,7 @@ export const metadata = {
 
 import Link from 'next/link'
 import {signIn} from "next-auth/react"
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import {toast} from 'react-hot-toast'
 import NavBarSignIn from '@/components/ui/navbarSignIn'
 
@@ -29,9 +29,38 @@ const Page: FC<pageProps> = ({}) => {
       toast.error("Something went wrong with your login")
     } 
   }
+
+  async function loginWithCredentials(e: FormEvent) {
+    e.preventDefault();
+    const form = new FormData(e.target as HTMLFormElement);
+
+    const res = await signIn('credentials', {
+      email: String(form.get('email')),
+      password: String(form.get('password')),
+      callbackUrl: '/',
+      redirect: true
+    }
+    )
+    console.log(res)
+  }
   return (
     <div style={{backgroundColor: 'whitesmoke', color: 'black'}}> 
-  <NavBarSignIn/>
+       <div className="flex mx-auto px-80 pt-20 mr-20 items-center justify-between h-20">
+       <nav className="hidden md:flex md:grow">
+          <ul className="flex grow justify-end flex-wrap items-center">
+            <li >
+                 <Link  href="/" className="text-xl font-medium text-blue-600 hover:bg-gray-600  hover:text-white w-full px-8 py-3 flex items-center transition duration-150 ease-in-out">
+                  Home
+                </Link>  
+              </li>
+              <li >
+                 <Link  href="/signup" className="btn text-xl text-white bg-blue-500 hover:bg-blue-700 w-full  sm:w-auto sm:mb-0t">
+                  Sign up
+                </Link>  
+              </li>
+            </ul>
+        </nav>
+      </div>
     <section className="relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20 ">
@@ -43,6 +72,11 @@ const Page: FC<pageProps> = ({}) => {
 
           {/* Form */}
           <div className="max-w-sm mx-auto">
+          <div className="flex items-center mb-6">
+              <div className="border-t border-gray-700 border-dotted grow mr-3" aria-hidden="true"></div>
+              <div className="text-gray-600 text-center text-xl">Sign in with Google or Github without having to sign up </div>
+              <div className="border-t border-gray-700 border-dotted grow ml-3" aria-hidden="true"></div>
+            </div>
             <form>
               <div className="flex flex-wrap -mx-3">
                 <div className="w-full px-3">
@@ -98,20 +132,20 @@ const Page: FC<pageProps> = ({}) => {
             </form>
             <div className="flex items-center my-6">
               <div className="border-t border-gray-700 border-dotted grow mr-3" aria-hidden="true"></div>
-              <div className="text-gray-400">Or, sign in with your email</div>
+              <div className="text-gray-600">Or, sign in with your email</div>
               <div className="border-t border-gray-700 border-dotted grow ml-3" aria-hidden="true"></div>
             </div>
-            <form>
+            <form onSubmit={loginWithCredentials}>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
-                  <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email</label>
-                  <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
+                  <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">Email</label>
+                  <input id="email" type="email" name='email' className="form-input w-full text-gray-800 " placeholder="you@yourcompany.com" required />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
-                  <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="password">Password</label>
-                  <input id="password" type="password" className="form-input w-full text-gray-300" placeholder="Password (at least 10 characters)" required />
+                  <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Password</label>
+                  <input id="password" type="password" name='password' className="form-input w-full text-gray-800" placeholder="Password (at least 10 characters)" required />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-4">
@@ -132,7 +166,7 @@ const Page: FC<pageProps> = ({}) => {
               </div>
             </form>
             <div className="text-gray-400 text-center mt-6">
-              Don’t you have an account? <Link href="/signup" className="text-blue-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign up</Link>
+              Don’t you have an account?  <Link href="/signup" className="text-blue-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign up</Link>
             </div>
           </div>
 
