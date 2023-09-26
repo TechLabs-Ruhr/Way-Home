@@ -1,29 +1,13 @@
 "use client"
 
-import NavBarSignIn from '@/components/ui/navbarSignIn'
-
-export const metadata = {
-  title: 'Way Home Sign Up',
-  description: 'Page description',
-}
-
-import { addFriendValidator } from '@/lib/validations/add-friend'
-import axios from 'axios'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
-//import axios from 'axios';
+import { FormEvent } from 'react'
 
 
 export default function SignUp() {
   const router = useRouter()
-
-  const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  })
 
 
   const registerUser = async (e: FormEvent) => {
@@ -42,15 +26,23 @@ export default function SignUp() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify(formData)
+        body:JSON.stringify(formData),
       })
         // Handle success, e.g., redirect or display a success message
-        console.log(res);
+        if (res.ok) {
+          // Registration was successful, so navigate to the sign-in page
+          router.push('/signin'); 
+        } else {
+          console.error('Registration failed');
+        }
     
   }
 
   return (
-    <div style={{backgroundColor: 'whitesmoke', color: 'black'}}> 
+    <div className='bg-[whitesmoke] text-black pb-72'> 
+      <Head>
+        <title>Sign Up</title>
+      </Head>
     <div className="flex mx-auto px-80 pt-20 mr-20 items-center justify-between h-20">
        <nav className="hidden md:flex md:grow">
           <ul className="flex grow justify-end flex-wrap items-center">
@@ -60,7 +52,7 @@ export default function SignUp() {
                 </Link>  
               </li>
               <li >
-                 <Link  href="/sigin" className="btn text-xl text-white bg-blue-500 hover:bg-blue-700 w-full  sm:w-auto sm:mb-0t">
+                 <Link  href="/signin" className="btn text-xl text-white bg-blue-500 hover:bg-blue-700 w-full  sm:w-auto sm:mb-0t">
                   Sign in
                 </Link>  
               </li>
@@ -72,7 +64,7 @@ export default function SignUp() {
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
 
           {/* Page header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+          <div className="max-w-3xl mx-auto text-center pb-6 md:pb-20">
             <h1 className="h1">Welcome. We exist to make traveling safer!</h1>
           </div>
           {/* Form */}
@@ -87,7 +79,6 @@ export default function SignUp() {
                 <div className="w-full px-3">
                   <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="first-name">First Name <span className="text-red-600">*</span></label>
                   <input id="first-name" type="text" name='firstName'
-                    onChange={(e) => {setData({...data, firstName: e.target.value})}}
                     className="form-input w-full text-gray-800" placeholder="Your username" required />
                 </div>
               </div>
@@ -95,7 +86,6 @@ export default function SignUp() {
                 <div className="w-full px-3">
                   <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="last-name">Last Name <span className="text-red-600">*</span></label>
                   <input id="last-name" type="text" name='lastName'
-                    onChange={(e) => {setData({...data, lastName: e.target.value})}}
                     className="form-input w-full text-gray-800" placeholder="Your username" required />
                 </div>
               </div>
@@ -103,7 +93,6 @@ export default function SignUp() {
                 <div className="w-full px-3">
                   <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">E-mail <span className="text-red-600">*</span></label>
                   <input id="email" type="email" name='email' 
-                    onChange={(e) => {setData({...data, email: e.target.value})}}
                     className="form-input w-full text-gray-800" placeholder="Your e-mail" required />
                 </div>
               </div>
@@ -111,11 +100,10 @@ export default function SignUp() {
                 <div className="w-full px-3">
                   <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Password <span className="text-red-600">*</span></label>
                   <input id="password" type="password"name='password'
-                    onChange={(e) => {setData({...data, firstName: e.target.value})}}
                     className="form-input w-full text-gray-800" placeholder="Password (at least 10 characters)" required />
                 </div>
               </div>
-              <div className="text-sm text-gray-500 text-center">
+              <div className="text-sm text-gray-600 text-center">
                 I agree to Way's Home <Link href="#" className="underline text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out">Privacy Policy</Link>.
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
@@ -126,8 +114,14 @@ export default function SignUp() {
                 </div>
               </div>
             </form>
-            <div className="text-gray-400 text-center mt-6">
-              Already signed up?? <Link href="/signin" className="text-blue-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</Link>
+            <div className="text-gray-600 text-center mt-6">
+              Already signed up?? <Link href="/signin" className="text-blue-600 hover:text-gray-600 transition duration-150 ease-in-out">Sign in</Link>
+            </div>
+            <div className="pt-5 border-b border-gray-700 border-dotted grow" aria-hidden="true"></div>
+            <div className="flex text-center items-center my-6">
+              <div className="text-gray-600"><p className='text-[0.92em] pb-3'>You can sign in faster without providing your credentials</p> 
+              <Link href="/signin" className='text-blue-600 font-semibold text-lg hover:text-gray-600 transition duration-150 ease-in-out'> Sign in with Google or Github</Link>
+              </div>
             </div>
           </div>
 
