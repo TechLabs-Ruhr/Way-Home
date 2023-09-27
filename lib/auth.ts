@@ -6,32 +6,21 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { fetchRedis } from "@/helpers/redis";
 import GoogleProvider from "next-auth/providers/google"
-import { z } from "zod";
 var bcrypt = require('bcryptjs');
 
 
-interface LoginCredentials {
-    email: string;
-    password: string;
-  }
 
-const loginUserSchema = z.object({
-    firstName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid first name'),
-    lastName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid last name'),
-    email: z.string().email(),
-    password: z.string().min(5, 'Password should have at least 5 characters'),
-  })
-
-export const authOptions: NextAuthOptions = { //assigning a type to the authOptions constant 
-    adapter: UpstashRedisAdapter(db),
+export const authOptions: NextAuthOptions = { 
+    adapter: UpstashRedisAdapter(db), //configure aithentication adapter
     session: {
-        strategy: 'jwt',
+        strategy: 'jwt', // define the session strategy as JSON Web Tokens
     },
     pages: {
         signIn: '/signin', 
     },
     providers: [
         GitHubProvider({
+            //retrieve environment variable values from the .env.local file
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
         }),

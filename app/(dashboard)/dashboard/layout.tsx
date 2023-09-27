@@ -10,7 +10,7 @@ import { fetchRedis } from '@/helpers/redis';
 import { User } from '@/app/types/db';
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id';
 import SidebarChatList from '@/components/userDashboard/SidebarChatList';
-import NavbarSignIn from '@/components/ui/navbarSignIn';
+import PageIllustration from '@/components/landingPage/page-illustration';
 
 export const metadata = {
     title: 'Way Home Dashboard',
@@ -50,6 +50,9 @@ const Layout = async ({children}: LayoutProps) => {
         ).length
 
     return <>
+    <div className='ml-20'>
+    <PageIllustration/>
+    </div>
     <div className='flex'>
     <div className='w-auto min-w-14 min-h-screen  border-gray-200 bg-white  fixed overflow-y-auto  '>
         <div className='flex h-screen w-full max-w-xs flex-col  overflow-y-auto  bg-white px-6 '>

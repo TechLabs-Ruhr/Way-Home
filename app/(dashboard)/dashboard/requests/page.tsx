@@ -27,7 +27,6 @@ const page = async () => {
         incomingSenderIds.map(async (senderId) => {
             const sender = await fetchRedis('get', `user:${senderId}`) as string
             const senderParsed = JSON.parse(sender) as User
-            console.log('sender', sender)
             return {
                 senderId,
                 senderEmail: senderParsed.email,
@@ -37,7 +36,7 @@ const page = async () => {
 
   return ( 
     <main className="pt-8 ml-10">
-        <h1 className="font-bold text-5xl mb-8">Your friend requests</h1>
+        <h1 className="font-bold  text-gray-600 text-5xl mb-8">Your friend requests</h1>
             <div className=' flex flex-col gap-4'>
                 <FriendRequests incomingFriendRequests={incomingFriendRequests} sessionId={session.user.id} />
             </div>

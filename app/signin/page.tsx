@@ -17,24 +17,19 @@ const Page: FC<pageProps> = ({}) => {
   const [isLoadingGitHub, setIsLoadingGitHub] = useState<boolean>(false)
 
   async function loginWithGoogle() {
-    setIsLoadingGoogle(true)
+    setIsLoadingGoogle(true) // replace provider icon with spinning loading icon 
     try{
-      await signIn('google')
+      await signIn('google') // initiate provider authentication process
     }catch(error) {
-      toast.error("Something went wrong with your login")
-    } finally {
-      setIsLoadingGoogle(false)
+      toast.error(toast.error(`Sign in failed: ${error}`)) //provide feedback on the authentication process if there is an error
     } 
-
   }
   async function loginWithGithub() {
-    setIsLoadingGitHub(true)
+    setIsLoadingGitHub(true) // replace provider icon with spinning loading icon 
     try{
-      await signIn('github')
+      await signIn('github')  // initiate provider authentication process
     }catch(error) {
-      toast.error("Something went wrong with your login")
-    } finally {
-      setIsLoadingGitHub(false)
+      toast.error(`Sign in failed: ${error}`) //provide feedback on the authentication process if there is an error
     } 
   }
 

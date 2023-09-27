@@ -39,10 +39,10 @@ export async function POST(req: Request) {
         await db.sadd(`user:${idToAdd}:friends`, session.user.id) 
 
         // clean up the friend requests 
-        await db.srem(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
+        await db.srem(`user${idToAdd}:incoming_friend_requests`, session.user.id)
  
         // remove the actual friend request
-        await db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd)
+        await db.srem(`user${session.user.id}:incoming_friend_requests`, idToAdd)
 
 
 
