@@ -37,9 +37,13 @@ NEXTAUTH_URL = http://localhost:3000
 GITHUB_SECRET = e547a5bbd6f7aecb7d4c1d1502587e4a122f0413 
 GITHUB_ID = dd08adf18c3117796549
 
+PUSHER_APP_ID="1670851"
+NEXT_PUBLIC_PUSHER_APP_KEY="e568c8d799554e9800d3"
+PUSHER_APP_SECRET="86ec0e039322585d00aa"
+
 ```
-These environment variables are neccessary for the connection to the database and the use of Google and Github OAuth 2. For safety reasons they are only stored locally and
-cannot be pushed to the Github repository
+These environment variables are neccessary for the connection to the database, the use of Google and Github OAuth 2 and partly finished real time functionality for sending and receving friend requests. 
+For safety reasons they are only stored locally and cannot be pushed to the Github repository
 7. Open the terminal and and use the command line: "npm run dev"
 8. Open the following link http://localhost:3000/ in your browser. Now you should be able to see the web application and use its features 
 
