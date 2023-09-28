@@ -10,4 +10,4 @@ export const messageValidator = z.object({
 
 export const messageArrayValidator = z.array(messageValidator)
 
-export type Messsage = z.infer<typeof messageValidator>
+export type Message = z.infer<typeof messageValidator>

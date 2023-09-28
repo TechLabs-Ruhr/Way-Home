@@ -41,5 +41,5 @@ export default withAuth(
 )
 
 export const config = { // determine in which routes the middleware will be run 
-    matcher: ['/', '/signin', '/dashboard/:path*' ]
+    matcher: ['/signin', '/dashboard/:path*' ]
 }

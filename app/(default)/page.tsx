@@ -1,22 +1,27 @@
-import { db } from '@/lib/db'
+//landing page
 
 export const metadata = {
-  title: 'Home - Open PRO',
-  description: 'Page description',
+  title: 'Way Home',
+  description: 'Best navigation app',
 }
 
-import Hero from '@/components/hero'
-import Features from '@/components/features'
-import Newsletter from '@/components/newsletter'
-import Zigzag from '@/components/zigzag'
-import Testimonials from '@/components/testimonials'
+import Hero from '@/components/landingPage/hero'
+import Features from '@/components/landingPage/features'
+import Newsletter from '@/components/landingPage/newsletter'
+import Zigzag from '@/components/landingPage/zigzag'
+import Testimonials from '@/components/landingPage/testimonials'
+import NavBarHome from '@/components/ui/nav-barHome'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export default async function Home() {
-  await db.set('hello', 'hello');
+  const session =  await getServerSession(authOptions)
+
 
   return (
     <>
     <div style={main}> 
+      <NavBarHome isSession={session}/>
       <Hero />
       <Features />
       <Zigzag />

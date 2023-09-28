@@ -1,12 +1,14 @@
-'use client'
 
-import { useEffect } from 'react'
 
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+export const metadata = {
+  title: 'Sign Up',
+  description: 'Page description',
+}
+
 
 import PageIllustration from '@/components/landingPage/page-illustration'
 import Footer from '@/components/ui/footer'
+import Head from 'next/head'
 
 export default function DefaultLayout({
   children,
@@ -14,27 +16,19 @@ export default function DefaultLayout({
   children: React.ReactNode
 }) {  
 
-  useEffect(() => {
-    AOS.init({
-      once: true,
-      disable: 'phone',
-      duration: 600,
-      easing: 'ease-out-sine',
-    })
-  })
-
   return (
     <>
-       
-      <main className="grow">
-
-      
+       <Head>
+        <title>Sign Up</title>
+      </Head>
+      <main className="grow pb-72 h-[150vh]" >
         <PageIllustration/>
         {children}
 
       </main>
-
-      <Footer />
+      <div > 
+        <Footer />
+      </div>
     </>
   )
 }
