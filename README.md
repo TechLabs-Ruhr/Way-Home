@@ -48,27 +48,23 @@ For safety reasons they are only stored locally and cannot be pushed to the Gith
 8. Open the following link http://localhost:3000/ in your browser. Now you should be able to see the web application and use its features 
 
 ### Examples
-#Authentication
-Google and Github OAuth 2
-1. Navigate to the sign in page
-2. Click on the "Sign in with GitHub" or "Sign in with Google" button
-
- **The Authentication flow for GitHub goes as follows:**   
-A click on the Sign in with GitHub button triggers this function:
-
-/app/signin/page.tsx
+# Github OAuth 2 Authentication
+1. User navigates to the sign in page
+2. User clicks on the "Sign in with GitHub" button
+3. The function "loginWithGithub()" defined in the "/app/signin/page.tsx" file gets triggered: 
 ```typecript
 async function loginWithGithub() {
     setIsLoadingGitHub(true) // replace provider icon with spinning loading icon 
     try{
-      await signIn('github') // initiate provider authentication process
+      await signIn('github') // initiate GitHub authentication process
     }catch(error) {
       toast.error(`Sign in failed: ${error}`) //provide feedback on the authentication process if there is an error
     } 
   }
 ```
-When the provider authentication process becomes initiated the api endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
-/lib/auth.ts
+
+4. When the GitHub authentication process becomes initiated the api endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
+/lib/auth.ts:
 
 ```typescript
 export const authOptions: NextAuthOptions = { 
@@ -84,43 +80,231 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GITHUB_ID as string, 
             clientSecret: process.env.GITHUB_SECRET as string,
         }), ...
-      ...
+```
+
+5. GitHub checks if the user is already logged in to its website.
+   If that's not the case it prompts him to provide his GitHub login data and validates them
+6. Upon successful User validation, the OAuth 2 Authentication process is almost complete. It just has to go
+   through the callbacks section of the authOptions used for managing the session and the JSON web token 
+
+```
    ],
-    callbacks: {
-        async jwt ({token, user}) {
-            const dbUserResult = await fetchRedis('get', `user:${token.id}`) as
+    callbacks: { // in the callback function we define what happens when the user signs in 
+        async jwt ({ // the jwt function expects us to return jwt value that is then stored for the session token
+            token, user}) { // upon successful OAuth 2 authentication a JSON web token and the user object is provided by NextAuth 
+            const dbUserResult = await fetchRedis('get', `user:${token.id}`) as // check if there is already such a user in the database 
             | string
             | null
-            if(!dbUserResult) {
-                token.id = user!.id
+            if(!dbUserResult)  // if the user doesn't exist yet 
+                token.id = user!.id // the id property of the JWT is updated with  the id property of the user object provided by NextAuth
+                // The "!" is a TypeScript non-null assertion operator telling TypeScript to trust that the user is not null or undefined  
                 return token
             }
-            const dbUser = JSON.parse(dbUserResult) as User
-            return {
+            const dbUser = JSON.parse(dbUserResult) as User  // If the user already exists
+            return {          //we are assigning the values of the existing user to the values of the JSON web token 
                 id: dbUser.id,
                 name: dbUser.name,
                 email: dbUser.email,
                 picture:dbUser.image,
             }
         },
-        async session({session, token}) {
-            if(token) {
+        async session({session, token}) { // the session function returns the session object which is used to determine whether the user already signed in or not
+            if(token) { // assigning the token values corresponding to the user data to the session values 
                 session.user.id = token.id;
                 session.user.name = token.name;
                 session.user.email = token.email;
                 session.user.image = token.picture;
             }
-            return session
+            return session // returning session regardless if there is a token or not 
         }, 
         redirect() {
-            return '/dashboard'
+            return '/dashboard' //Finally the user is navigated to the dashboard page from which he can use other app features
         },
     },
 }
 
 ```
+7. The GiHub OAuth 2 Authentication process is completed
+   
+# Credential Provider Authentication
+1. User navigates to the sign-up page
+2. User types in the necessary credentials in the respective input fields and clicks on the sign-up button
+3. The function "registerUser()" is triggered:
+```
+  const registerUser = async (e: FormEvent) => {
+    const form = new FormData(e.target as HTMLFormElement);
+    e.preventDefault();
+    // Assign values to the data object
+    const formData = {
+      firstName: String(form.get('firstName')),
+      lastName: String(form.get('lastName')),
+      email: String(form.get('email')),
+      password: String(form.get('password')),
+     };
+
+    const res = await fetch('/api/register', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(formData), //stringify the user data object to save it as a json string in the db
+    })
+    // Handle success, e.g., redirect or display a success message  
+    if (res.ok) {
+      toast.success("Registration Successful")
+      // Registration was successful, so navigate to the sign-in page
+      router.push('/signin'); 
+      } else { 
+        toast.error("Registration failed")
+      }
+  }
+```
+4. The function calls the register API endpoint:
+```
+const registerUserSchema = z.object({ //validate user data
+  firstName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid first name'),
+  lastName: z.string().regex(/^[a-z ,.'-]+$/i, 'invalid last name'),
+  email: z.string().email(),
+  password: z.string().min(5, 'Password should have at least 5 characters'),
+})
+
+export  async function POST(req: Request) {
+    try {
+      const body =  await req.json() // receive the json string 
+      const formData = registerUserSchema.parse(body); // validate it and parse it to a JS object
+      const { firstName, lastName, email, password } = formData;
+
+      //hash the password 
+      const hashedPassword =  await bcrypt.hash(password, 10)
+
+      //construct the userDataValidation object needed for sign in validation
+      const userDataValidation  = {
+        firstName,
+        lastName,
+        email,
+        image: "/images/human-icon.jpg",
+        emailVerified: null,
+        password: hashedPassword,
+        id: uuidv4(),
+      };
+
+      //construct the userDataCallbacks object needed for managing the JWT and session  
+      const userDataCallbacks  = {
+        name: firstName + " " + lastName,
+        email,
+        image: "/images/human-icon.jpg",
+        emailVerified: null,
+        id: userDataValidation.id,
+      };
+
+      // Convert the user data objects to a JSON string
+      const userDataValidationJSON = JSON.stringify(userDataValidation);
+      const userDataCallbacksJSON = JSON.stringify(userDataCallbacks);
+      
+      // Store userValidationJSON string in redis
+      await db.set(`user:${userDataValidation.email}`, userDataValidationJSON);
+
+      // Store the userDataValidation string in redis 
+      await db.set(`user:${userDataValidation.id}`, userDataCallbacksJSON);      
+      
+      // Store a third JSON string in Redis in a format required for receiving friend requests
+      await db.set(`user:email:${userDataValidation.email}`, userDataValidation.id); 
+
+      return new Response("OK") //inform front end that the registration process was successful
+    } catch(error) {  //Otherwise inform front end that the registration process failed
+        console.error('Error: ', error)
+        if (error instanceof z.ZodError) {
+            return new Response('Invalid request payload')
+      } else {
+        return new Response('Invalid request payload', {status: 422})
+      }
+    }
+}
+```
+
+5. The user types in his credentials in the respective input fields and clicks on the sign in button   
+6. The function "loginWithCredentials()" defined in the "/app/signin/page.tsx" file gets triggered:
+
+```
+ async function loginWithCredentials(e: FormEvent) {
+    e.preventDefault();
+    const form = new FormData(e.target as HTMLFormElement);
+
+    const res = await signIn('credentials', { //initiate credential provider authentication process 
+      email: String(form.get('email')), // pass the user data from the authentication form 
+      password: String(form.get('password')),
+      callbackUrl: '/',
+      redirect: true
+    }
+    )
+    console.log(res)
+  }
+ ```
+4. When the credentials authentication process becomes initiated the API endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
+/lib/auth.ts:
+ ```
+CredentialsProvider( {
+            name: "Credentials",
+            credentials: {
+                email: {
+                    label: "email",
+                    type: "text",
+                    placeholder: "yourEmail"
+                },
+                password: {
+                    label: "Password",
+                    type: "password",
+                    placeholder: "your-awesome-password"
+                }
+            },
+            async authorize(credentials, req) {
+            try {
+               if(!credentials?.email || !credentials.password) {
+                return null
+               }
+                // Parse user credentials from the login form
+                const email = credentials.email;
+                const password = credentials.password;
+
+                // Fetch the user data from Redis based on the email
+                const userDataKey = `user:${email}`;
+                const userData = await fetchRedis('get', userDataKey);
+
+                if (!userData) {
+                // User with the given email does not exist
+                console.log(("The user with the given email does not exist"))
+                return null;
+                }
+
+                // Parse the user data from Redis 
+                const userDataObj = JSON.parse(userData);
+
+                // Check if the password matches
+                const isPasswordValid = await bcrypt.compare(credentials.password, userDataObj.password)
+                
+                if (isPasswordValid) {
+                // Return the user object 
+                const user = {
+                    id: userDataObj.id,
+                    email: userDataObj.email,
+                    name: userDataObj.firstName,
+                    picture: userDataObj.image,
+                };
+              
+                return user;
+                } else {
+                // Password does not match
+                throw new Error('invalid credentials')
+                }
+            } catch (error) {
+                console.error('Error during authorization:', error);
+                return null;
+            }
+        },
+ ```
 
 
+ 
 ### Roadmap
 
 1. **Landing page** - Since  the data science team was looking for useful data sources at the begnning one of the first steps for the web dev team was to create an enticing landing page to encourage new users to sign in and use the app.
