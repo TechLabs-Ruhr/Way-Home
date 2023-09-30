@@ -3,19 +3,19 @@
 # Way Home
 #### Find the safest route to your desired destination
 
-The concept of Way Home emerged from a pressing concern for the safety and well-being of individuals, particularly women,<br> 
-during their commutes. Alarming statistics and anecdotal evidence point to a gap in available solutions for ensuring personal<br> 
-safety while traveling.
+The concept of Way Home emerged from a pressing concern for the safety and well-being of individuals, particularly women,
+during their commutes. Alarming statistics and anecdotal evidence point to a gap in available solutions for ensuring personal
+safety while traveling.<br> 
 
 To address this gap, we implemented a web application that enables users to connect with fellow travelers during their commutes 
-via a chat feature powered by a high-speed Redis in-memory database, ensuring immediate communication.
+via a chat feature powered by a high-speed Redis in-memory database, ensuring immediate communication.<br> 
 
-Accessing our application is made possible through OAuth 2 authentication via GitHub and Google, provided by the NextAuth library.<br> 
+Accessing our application is made possible through OAuth 2 authentication via GitHub and Google, provided by the NextAuth library.
 This streamlines login, boosts security and improves the overall user experience by eliminating the need for users to provide credentials.
 
 With Way Home, we're not just another navigation app. We're a safety-first solution dedicated to empowering you to
 feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
-territories with confidence!
+territories with confidence!<br>
 ### Tech Stack
 The project utilizes a robust tech stack to deliver an efficient and user-friendly experience:
 
@@ -31,7 +31,7 @@ The project utilizes a robust tech stack to deliver an efficient and user-friend
   utility classes that we could use to rapidly create consistent and responsive designs
 
 ### How to Setup and Run
-Click on this link to see the [Video Tutorial]( https://drive.google.com/file/d/1OgfJpYD617oYt-ve1ox3J7knAlC15y44/view?usp=drive_link)
+Click on this link to see the [Video Tutorial]( https://drive.google.com/file/d/1OgfJpYD617oYt-ve1ox3J7knAlC15y44/view?usp=drive_link) <br>
 In order to set up the project, please proceed as follows:
 
 1. Download node.js, and install the npm package manager<br>  
