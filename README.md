@@ -22,7 +22,7 @@ The project utilizes a robust tech stack to deliver an efficient and user-friend
 - **Next.js** -a powerful React framework that offers server-side rendering (SSR) and static site generation (SSG) out of the box.
    This results in faster page loads, improved SEO, and a smoother user experience. Additionally, Next.js simplifies routing and API integration,
    which made our development more efficient.
-- **TypeScript** -  TypeScript enhanced our development process by adding static typing to JavaScript. This resulted in fewer runtime errors and improved  
+- **TypeScript** -  TypeScript enhanced our development process by adding static typing to JavaScript. This resulted in fewer runtime errors and improved
   code quality
 - **Serverless Upstash Redis Database** -  Using a serverless Redis database from Upstash allowed us to leverage the benefits of a Redis database 
   without the operational overhead of managing server infrastructure. Redis is renowned for its lightning-fast data retrieval and caching capabilities, making it
@@ -71,7 +71,7 @@ For safety reasons, they are only stored locally and cannot be pushed to the Git
 8. Open the following link http://localhost:3000 in your browser. Now you should be able to see the web application and use its features 
 
 ### Examples
-#Video walkthroughs:
+#### Video walkthroughs:
 - All 3 authentication providers and their interaction with the database: [click on this link](https://www.youtube.com/watch?v=SEaSnX1qJDs)
 - Chat feature + sending, receiving and accepting friend requests: [click on this link](https://drive.google.com/file/d/1hyZIa0nzIZSOa5_QuuC7yUieBQK_XUBb/view?usp=sharing)
 #### Github OAuth 2 Authentication
