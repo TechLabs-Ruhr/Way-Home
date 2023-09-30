@@ -1,7 +1,7 @@
 
 
-#### Way Home
-## Find the safest route to your desired destination
+# Way Home
+#### Find the safest route to your desired destination
 
 The concept of Way Home emerged from a pressing concern for the safety and well-being of individuals, particularly women,<br> 
 during their commutes. Alarming statistics and anecdotal evidence point to a gap in available solutions for ensuring personal<br> 
@@ -16,7 +16,7 @@ This streamlines login, boosts security and improves the overall user experience
 With Way Home, we're not just another navigation app. We're a safety-first solution dedicated to empowering you to
 feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
 territories with confidence!
-### Tech Stack
+#### Tech Stack
 The project utilizes a robust tech stack to deliver an efficient and user-friendly experience:
 
 - **Next.js** -a powerful React framework that offers server-side rendering (SSR) and static site generation (SSG) out of the box.<br>
@@ -30,7 +30,7 @@ The project utilizes a robust tech stack to deliver an efficient and user-friend
 - **Tailwind CSS for Styling** - Tailwind CSS is a utility-first CSS framework that streamlines the styling process. It provided us with a comprehensive set of pre-built<br>
   utility classes that we could use to rapidly create consistent and responsive designs
 
-### How to Setup and Run
+#### How to Setup and Run
 Click on this link to see the [Video Tutorial]( https://drive.google.com/file/d/1OgfJpYD617oYt-ve1ox3J7knAlC15y44/view?usp=drive_link)
 In order to set up the project, please proceed as follows:
 
@@ -70,11 +70,11 @@ For safety reasons, they are only stored locally and cannot be pushed to the Git
 7. Open the terminal and use the command line: "npm run dev"
 8. Open the following link http://localhost:3000 in your browser. Now you should be able to see the web application and use its features 
 
-### Examples
+#### Examples
 #Video walkthroughs:
 - All 3 authentication providers and their interaction with the database: [click on this link](https://www.youtube.com/watch?v=SEaSnX1qJDs)
 - Chat feature + sending, receiving and accepting friend requests: [click on this link](https://drive.google.com/file/d/1hyZIa0nzIZSOa5_QuuC7yUieBQK_XUBb/view?usp=sharing)
-# Github OAuth 2 Authentication
+##### Github OAuth 2 Authentication
 1. User navigates to the sign in page
 2. User clicks on the "Sign in with GitHub" button
 3. The function "loginWithGithub()" defined in the "/app/signin/page.tsx" file gets triggered: 
@@ -152,7 +152,7 @@ export const authOptions: NextAuthOptions = {
 ```
 7. The GiHub OAuth 2 Authentication process is completed
    
-# Credential Provider Authentication
+##### Credential Provider Authentication
 1. User navigates to the sign-up page
 2. User types in the necessary credentials in the respective input fields and clicks on the sign-up button
 3. The function "registerUser()" is triggered:
@@ -332,7 +332,7 @@ CredentialsProvider( {
    establish a user session. (see the above description of the GitHub OAuth 2 authentication)
 9. The credentials provider authentication is completed 
  
-### Roadmap
+#### Roadmap
 
 1. **Landing page** - Since  the data science team was looking for useful data sources at the beginning one of the first steps for the web dev team was to create an enticing landing page to encourage new users to sign in and use the app.
 2. **Connection to the Google Maps API** - to implement the core app features like route recommendations we had to access the Google Maps API. Since all our data scientists have dropped out of the program, we didn't use
@@ -348,12 +348,12 @@ CredentialsProvider( {
    - Sending, receiving and viewing text messages 
 
   
-### Authors
+#### Authors
 
 - [@Mariusz Seget](https://www.github.com/Isztof)
 - [@Lukas Jazwinski](https://github.com/Lumpays)
 
-### Credits
+#### Credits
 - Next, Typescript, Tailwind template used for the landing page sign up and sign in: https://github.com/cruip/open-react-template <br>
 - The icons used on the page were taken from fontawesome.com: https://fontawesome.com/icons
 - Video tutorial used for implementing the chat feature: https://www.youtube.com/watch?v=NlXfg5Pxxh8&t=4627s 
