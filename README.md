@@ -19,15 +19,15 @@ territories with confidence!<br>
 ### Tech Stack
 The project utilizes a robust tech stack to deliver an efficient and user-friendly experience:
 
-- **Next.js** -a powerful React framework that offers server-side rendering (SSR) and static site generation (SSG) out of the box.<br>
-   This results in faster page loads, improved SEO, and a smoother user experience. Additionally, Next.js simplifies routing and API integration,<br>
+- **Next.js** -a powerful React framework that offers server-side rendering (SSR) and static site generation (SSG) out of the box.
+   This results in faster page loads, improved SEO, and a smoother user experience. Additionally, Next.js simplifies routing and API integration,
    which made our development more efficient.
 - **TypeScript** -  TypeScript enhanced our development process by adding static typing to JavaScript. This resulted in fewer runtime errors and improved  
   code quality
-- **Serverless Upstash Redis Database** -  Using a serverless Redis database from Upstash allowed us to leverage the benefits of a Redis database <br>
-  without the operational overhead of managing server infrastructure. Redis is renowned for its lightning-fast data retrieval and caching capabilities, making it<br>
+- **Serverless Upstash Redis Database** -  Using a serverless Redis database from Upstash allowed us to leverage the benefits of a Redis database 
+  without the operational overhead of managing server infrastructure. Redis is renowned for its lightning-fast data retrieval and caching capabilities, making it
   an excellent choice for  chat applications.
-- **Tailwind CSS for Styling** - Tailwind CSS is a utility-first CSS framework that streamlines the styling process. It provided us with a comprehensive set of pre-built<br>
+- **Tailwind CSS for Styling** - Tailwind CSS is a utility-first CSS framework that streamlines the styling process. It provided us with a comprehensive set of pre-built
   utility classes that we could use to rapidly create consistent and responsive designs
 
 ### How to Setup and Run
