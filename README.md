@@ -1,20 +1,43 @@
 
 
-## Way Home
+#### Way Home
 ## Find the safest route to your desired destination
 
-We're not just another navigation app. We're a safety-first solution dedicated to empowering you to
+The concept of Way Home emerged from a pressing concern for the safety and well-being of individuals, particularly women,<br> 
+during their commutes. Alarming statistics and anecdotal evidence point to a gap in available solutions for ensuring personal<br> 
+safety while traveling.
+
+To address this gap, we implemented a web application that enables users to connect with fellow travelers during their commutes 
+via a chat feature powered by a high-speed Redis in-memory database, ensuring immediate communication.
+
+Accessing our application is made possible through OAuth 2 authentication via GitHub and Google, provided by the NextAuth library.<br> 
+This streamlines login, boosts security and improves the overall user experience by eliminating the need for users to provide credentials.
+
+With Way Home, we're not just another navigation app. We're a safety-first solution dedicated to empowering you to
 feel secure during your journeys. With WayHome, you can embark on adventures, explore new cities, and navigate through unfamiliar 
 territories with confidence!
+### Tech Stack
+The project utilizes a robust tech stack to deliver an efficient and user-friendly experience:
+
+- **Next.js** -a powerful React framework that offers server-side rendering (SSR) and static site generation (SSG) out of the box.<br>
+   This results in faster page loads, improved SEO, and a smoother user experience. Additionally, Next.js simplifies routing and API integration,<br>
+   which made our development more efficient.
+- **TypeScript** -  TypeScript enhanced our development process by adding static typing to JavaScript. This resulted in fewer runtime errors and improved  
+  code quality
+- **Serverless Upstash Redis Database** -  Using a serverless Redis database from Upstash allowed us to leverage the benefits of a Redis database <br>
+  without the operational overhead of managing server infrastructure. Redis is renowned for its lightning-fast data retrieval and caching capabilities, making it<br>
+  an excellent choice for  chat applications.
+- **Tailwind CSS for Styling** - Tailwind CSS is a utility-first CSS framework that streamlines the styling process. It provided us with a comprehensive set of pre-built<br>
+  utility classes that we could use to rapidly create consistent and responsive designs
 
 ### How to Setup and Run
-
+Click on this link to see the [Video Tutorial]( https://drive.google.com/file/d/1OgfJpYD617oYt-ve1ox3J7knAlC15y44/view?usp=drive_link)
 In order to set up the project, please proceed as follows:
 
-1 Download node.js, and install the npm package manager
+1. Download node.js, and install the npm package manager<br>  
 2. Download VS Code and Git (For a more detailed description of setting up GitHub and VS Code use the respective guide in  our ClickUp documentation)
 
-After successful installation you have to go through the following steps to run the project:
+After the successful installation of the above tools you have to go through the following steps to run the project:
 1. Clone the project repository
 2. open the terminal in vs code. Make sure that you're in the root directory of the project (it should be the directory where you saved the app files from GitHub on your PC) and use the command line: "npm install"
 3. Create a file named: ".env.local":
@@ -42,12 +65,15 @@ NEXT_PUBLIC_PUSHER_APP_KEY="e568c8d799554e9800d3"
 PUSHER_APP_SECRET="86ec0e039322585d00aa"
 
 ```
-These environment variables are neccessary for the connection to the database, the use of Google and Github OAuth 2 and partly finished real time functionality for sending and receving friend requests. 
-For safety reasons they are only stored locally and cannot be pushed to the Github repository
-7. Open the terminal and and use the command line: "npm run dev"
-8. Open the following link http://localhost:3000/ in your browser. Now you should be able to see the web application and use its features 
+These environment variables are necessary for the connection to the database, the use of Google and Github OAuth 2 and a partly finished real-time functionality for sending and receiving friend requests.<br> 
+For safety reasons, they are only stored locally and cannot be pushed to the Github repository
+7. Open the terminal and use the command line: "npm run dev"
+8. Open the following link http://localhost:3000 in your browser. Now you should be able to see the web application and use its features 
 
 ### Examples
+#Video walkthroughs:
+- All 3 authentication providers and their interaction with the database: [click on this link](https://www.youtube.com/watch?v=SEaSnX1qJDs)
+- Chat feature + sending, receiving and accepting friend requests: [click on this link](https://drive.google.com/file/d/1hyZIa0nzIZSOa5_QuuC7yUieBQK_XUBb/view?usp=sharing)
 # Github OAuth 2 Authentication
 1. User navigates to the sign in page
 2. User clicks on the "Sign in with GitHub" button
@@ -63,12 +89,12 @@ async function loginWithGithub() {
   }
 ```
 
-4. When the GitHub authentication process becomes initiated the api endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
+4. When the GitHub authentication process becomes initiated the API endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
 /lib/auth.ts:
 
 ```typescript
 export const authOptions: NextAuthOptions = { 
-    adapter: UpstashRedisAdapter(db), //configure aithentication adapter
+    adapter: UpstashRedisAdapter(db), //configure authentication adapter
     session: {
         strategy: 'jwt', // define the session strategy as JSON Web Tokens
     },
@@ -240,7 +266,7 @@ export  async function POST(req: Request) {
     console.log(res)
   }
  ```
-4. When the credentials authentication process becomes initiated the API endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
+7. When the credentials authentication process becomes initiated the API endpoint: "pages/api/auth/[...nextauth.ts] gets called that uses the authOptions constant saved under:
 /lib/auth.ts:
  ```
 CredentialsProvider( {
@@ -302,22 +328,24 @@ CredentialsProvider( {
             }
         },
  ```
-
+8. In case of successful authorization the user object returned by the authorize function is then handled in the callbacks section of the auth options to  
+   establish a user session. (see the above description of the GitHub OAuth 2 authentication)
+9. The credentials provider authentication is completed 
  
 ### Roadmap
 
-1. **Landing page** - Since  the data science team was looking for useful data sources at the begnning one of the first steps for the web dev team was to create an enticing landing page to encourage new users to sign in and use the app.
-2. **Connection to the google maps API** - to implement the core app features like route recommendations we had to access the google maps API. Since all our data scientists have dropped out of the programm we didn't use
+1. **Landing page** - Since  the data science team was looking for useful data sources at the beginning one of the first steps for the web dev team was to create an enticing landing page to encourage new users to sign in and use the app.
+2. **Connection to the Google Maps API** - to implement the core app features like route recommendations we had to access the Google Maps API. Since all our data scientists have dropped out of the program, we didn't use
     it for anything other than displaying it on the user dashboard
-3. **Authentication** - we used next auth to create the user accounts with session which are neccessary for the other app features
+3. **Authentication** - we used next auth to create the user accounts with sessions that are necessary for the other app features
    Our app includes 3 possible authentication methods:
    - GitHub OAuth 2
    - Google OAuth 2
    - Credential Provider (Standard authentication by creating a user account consisting of username, email and password) 
 4. **Chat feature** - Currently the most complex feature of our application it consists of:
-   - User dashboard with sign out function
+   - User dashboard with sign-out function
    - Sending, receiving, viewing and denying friend requests
-   - Sending and receiving text messages 
+   - Sending, receiving and viewing text messages 
 
   
 ### Authors
@@ -326,8 +354,9 @@ CredentialsProvider( {
 - [@Lukas Jazwinski](https://github.com/Lumpays)
 
 ### Credits
-Next, Typescript, Tailwind template used for the landing page sign up and sign in: https://github.com/cruip/open-react-template 
-Video toturial used for implementing the chat feature: https://www.youtube.com/watch?v=NlXfg5Pxxh8&t=4627s 
-(we extended it by the GitHub and credentials provider authentication and some further front end features)
+- Next, Typescript, Tailwind template used for the landing page sign up and sign in: https://github.com/cruip/open-react-template <br>
+- The icons used on the page were taken from fontawesome.com: https://fontawesome.com/icons
+- Video tutorial used for implementing the chat feature: https://www.youtube.com/watch?v=NlXfg5Pxxh8&t=4627s 
+(we extended it by the GitHub and credentials provider authentication and some further front-end enhancements)
   
 
