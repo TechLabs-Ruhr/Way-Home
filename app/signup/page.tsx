@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
+import toast from 'react-hot-toast'
 
 
 export default function SignUp() {
@@ -13,29 +14,29 @@ export default function SignUp() {
   const registerUser = async (e: FormEvent) => {
     const form = new FormData(e.target as HTMLFormElement);
     e.preventDefault();
-  // Assign values to the data object
-  const formData = {
-    firstName: String(form.get('firstName')),
-    lastName: String(form.get('lastName')),
-    email: String(form.get('email')),
-    password: String(form.get('password')),
-  };
+    // Assign values to the data object
+    const formData = {
+      firstName: String(form.get('firstName')),
+      lastName: String(form.get('lastName')),
+      email: String(form.get('email')),
+      password: String(form.get('password')),
+     };
 
-     const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(formData),
-      })
-        // Handle success, e.g., redirect or display a success message
-        if (res.ok) {
-          // Registration was successful, so navigate to the sign-in page
-          router.push('/signin'); 
-        } else {
-          console.error('Registration failed');
-        }
-    
+    const res = await fetch('/api/register', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(formData), //stringify the user data object to save it as a json string in the db
+    })
+    // Handle success, e.g., redirect or display a success message  
+    if (res.ok) {
+      toast.success("Registration Successful")
+      // Registration was successful, so navigate to the sign-in page
+      router.push('/signin'); 
+      } else { 
+        toast.error("Registration failed")
+      }
   }
 
   return (

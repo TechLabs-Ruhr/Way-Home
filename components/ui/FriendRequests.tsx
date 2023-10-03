@@ -24,7 +24,6 @@ const FriendRequests: FC<FriendRequestsProps> = ({
     useEffect(() => {
         pusherClient.subscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`)) // we use the helper function to bypass the colon  that is invalid inside the subscribe method
 
-        console.log("subscriberd to ", `user:${sessionId}:incoming_friend_requests`)
 
         const friendRequestHandler = ({senderId, senderEmail}: IncomingFriendRequest) => {
             console.log("new friend request ")
