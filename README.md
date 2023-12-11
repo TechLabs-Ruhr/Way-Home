@@ -46,27 +46,9 @@ After the successful installation of the above tools you have to go through the 
 
    
 Place the environment variables in the ".env.local" file in your route directory.
-  ```
-NEXTAUTH_SECRET = Y2U2nsg2xcyjAVo1FmDI53wvzhuEAY2xqWu5BN5RSaU=
-
-UPSTASH_REDIS_REST_URL=https://fast-raptor-39621.upstash.io
-UPSTASH_REDIS_REST_TOKEN=AZrFASQgODJiNDRjNjgtNmFiOS00ODljLWE3MGYtZDY5Mzk3MzMzMzg4MjZlYjZiYTExZTczNDkxZTliMmI5NWM5MWRhZmEzMmM=
-
-GOOGLE_CLIENT_ID = 41656623297-fat94itilm6hdl9g4ct0pv9a4uq6ch97.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET = 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
-
-NEXTAUTH_URL = http://localhost:3000
-
-GITHUB_SECRET = e547a5bbd6f7aecb7d4c1d1502587e4a122f0413 
-GITHUB_ID = dd08adf18c3117796549
-
-PUSHER_APP_ID="1670851"
-NEXT_PUBLIC_PUSHER_APP_KEY="e568c8d799554e9800d3"
-PUSHER_APP_SECRET="86ec0e039322585d00aa"
-
-```
-These environment variables are necessary for the connection to the database, the use of Google and Github OAuth 2 and a partly finished real-time functionality for sending and receiving friend requests.<br> 
-For safety reasons, they are only stored locally and cannot be pushed to the Github repository
+The environment variables are necessary for the connection to the database, the use of Google and Github OAuth 2 and a partly finished real-time functionality for sending and receiving friend requests.<br> 
+For safety reasons, they are only stored locally and cannot be pushed to the Github repository 
+To get the environment variables  dm [@Mariusz Seget](https://www.github.com/Isztof) or write an e-mail requesting those variables to mariuszseget77@gmail.com 
 7. Open the terminal and use the command line: "npm run dev"
 8. Open the following link http://localhost:3000 in your browser. Now you should be able to see the web application and use its features 
 
