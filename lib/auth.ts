@@ -19,8 +19,8 @@ export const authOptions: NextAuthOptions = {
         signIn: '/signin', 
     },
     providers: [
+         //retrieve environment variable values from the .env.local file
         GitHubProvider({
-            //retrieve environment variable values from the .env.local file
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
         }),
@@ -44,15 +44,18 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials, req) {
             try {
-               if(!credentials?.email || !credentials.password) {
-                return null
+                // Check if credentials are provided
+                if(!credentials?.email || !credentials.password) {
+                    console.error('Missing email or password');
+                    return null
                }
                 // Parse user credentials from the login form
                 const email = credentials.email;
-                const password = credentials.password;
 
                 // Fetch the user data from Redis based on the email
                 const userDataKey = `user:${email}`;
+
+               console.log("Jetzt erfogt die speicherung der userdaten in redis")
                 const userData = await fetchRedis('get', userDataKey);
 
                 if (!userData) {
@@ -68,7 +71,8 @@ export const authOptions: NextAuthOptions = {
                 const isPasswordValid = await bcrypt.compare(credentials.password, userDataObj.password)
                 
                 if (isPasswordValid) {
-                // Return the user object 
+                console.log('User authenticated successfully');
+                    // Return the user object 
                 const user = {
                     id: userDataObj.id,
                     email: userDataObj.email,

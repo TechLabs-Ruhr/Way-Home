@@ -1,9 +1,4 @@
 'use client'
-export const metadata = {
-  title: 'Sign In',
-  description: 'Page description',
-}
-
 import Link from 'next/link'
 import {signIn} from "next-auth/react"
 import { FC, FormEvent, useState } from 'react'
