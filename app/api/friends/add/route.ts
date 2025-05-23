@@ -2,7 +2,6 @@ import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from "@/lib/auth"
 import { db } from '@/lib/db'
 import { addFriendValidator } from "@/lib/validations/add-friend"
-import { log } from 'console'
 import { getServerSession } from "next-auth"
 import {z} from "zod"
 import fetchUserByEmail from '@/app/helpers/fetchUsersByEmail';
@@ -17,7 +16,7 @@ export async function POST(req: Request) {
 
     
         const idToAdd = (await fetchRedis('get', `user:email:${emailToAdd}`)) as string
-        console.log("idToAdd: ", idToAdd)
+    
 
         if(!idToAdd) {
             return new Response('This person does not exist', {status: 400} )

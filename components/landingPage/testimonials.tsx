@@ -13,7 +13,7 @@ export default function Testimonials() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4">Discover What Our Users Say</h2>
-            <p className="text-xl text-gray-400">At SafeWay Home, the safety and satisfaction of our users are at the heart of everything we do. Don't just take our word for it.
+            <p className="text-xl text-gray-400">At Way Home, the safety and satisfaction of our users are at the heart of everything we do. Don't just take our word for it.
              Hear what our incredible community has to say about their experiences with our app!</p>
           </div>
 
@@ -69,9 +69,18 @@ export default function Testimonials() {
             </div>
 
           </div>
-
-        </div>
-        <div className="py-12 md:py-20 border-b border-gray-800"></div>
+          <div className="py-12 md:py-20 border-b border-gray-800"></div>
+            {/* Section header */}
+            <div className="max-w-3xl mt-5 mx-auto text-center py-12 md:pb-16">
+              <h3 className="h2 mx-9" data-aos="fade-up">Begin Your Journey Now!</h3>
+              <p className="text-xl mt-6 text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">We're waiting for you</p>
+              <div className="max-w-xs pt-18 mx-auto sm:max-w-none sm:flex sm:justify-center">
+               <div data-aos="fade-up" data-aos-delay="400">
+                <a className="button btn text-white bg-blue-500 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" href="/signup">Start free trial</a>
+               </div>
+              </div>
+            </div>
+        </div> 
       </div>
     </section>
   )

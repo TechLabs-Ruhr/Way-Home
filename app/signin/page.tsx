@@ -5,6 +5,7 @@ import { FC, FormEvent, useState } from 'react'
 import {toast} from 'react-hot-toast'
 import NavBarSignIn from '@/components/ui/navbarSignIn'
 
+
 interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
@@ -29,17 +30,23 @@ const Page: FC<pageProps> = ({}) => {
   }
 
   async function loginWithCredentials(e: FormEvent) {
-    e.preventDefault();
-    const form = new FormData(e.target as HTMLFormElement);
+    try {
+      e.preventDefault();
+      const form = new FormData(e.target as HTMLFormElement);
+  
+      const res = await signIn('credentials', {
+        email: String(form.get('email')),
+        password: String(form.get('password')),
+        redirect: true
+      })
 
-    const res = await signIn('credentials', {
-      email: String(form.get('email')),
-      password: String(form.get('password')),
-      callbackUrl: '/',
-      redirect: true
+    } catch (error) {
+      toast.error(`${error}`)
     }
-    )
-    console.log(res)
+
+   
+    
+    
   }
   return (
     <div className='bg-[whitesmoke] text-black pb-72'>
