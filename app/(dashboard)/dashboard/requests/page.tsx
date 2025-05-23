@@ -11,17 +11,13 @@ import { FC } from 'react'
 
 const page = async () => {
     const session = await getServerSession(authOptions)
-
     if(!session) notFound()
 
-    console.log("session.user.id", session.user.id)
     //ids of people who sent current logged in user a friend requests
     const incomingSenderIds = (await fetchRedis(
      'smembers',
      `user${session.user.id}:incoming_friend_requests`
      )) as string []
-    
-    console.log("íncomingSenderIds: " + incomingSenderIds)
      
     const incomingFriendRequests = await Promise.all(
         incomingSenderIds.map(async (senderId) => {

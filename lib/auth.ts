@@ -12,6 +12,7 @@ var bcrypt = require('bcryptjs');
 
 export const authOptions: NextAuthOptions = { 
     adapter: UpstashRedisAdapter(db), //configure aithentication adapter
+    debug: true,
     session: {
         strategy: 'jwt', // define the session strategy as JSON Web Tokens
     },
@@ -30,7 +31,8 @@ export const authOptions: NextAuthOptions = {
         }),
         CredentialsProvider( { 
             name: "Credentials",
-            credentials: { // define credentials provided in the authentication process 
+            // define credentials provided in the authentication process 
+            credentials: { 
                 email: {
                     label: "email",
                     type: "text",
@@ -92,18 +94,21 @@ export const authOptions: NextAuthOptions = {
         },
 
     })],
-    callbacks: { // in the callback functions we define what happens when the user signs in 
-        async jwt ({ //the jwt function  returns a jwt value that is then stored for the session token
-            token, user}) { // upon successful authentication a JSON web token is created 
-            const dbUserResult = await fetchRedis('get', `user:${token.id}`) as // check if there is already such a user in the database 
+    // in the callback functions we define what happens when the user signs in 
+    callbacks: { 
+        async jwt ({ 
+            token, user}) { 
+            const dbUserResult = await fetchRedis('get', `user:${token.id}`) as  
             | string
             | null
-            if(!dbUserResult) { // if the user doesn't exist yet 
-                token.id = user!.id // then the id property of the JWT is updated with  the id property of the user object provided by NextAuth
-                // The "!" is a TypeScript non-null assertion operator telling TypeScript to trust that the user is not null or undefined
+            if(!dbUserResult) { 
+                token.id = user!.id 
+                token.name = user!.name;
+                token.email = user!.email;
+                token.picture = user!.image;
                 return token
             }
-            const dbUser = JSON.parse(dbUserResult) as User // if the user already exists
+            const dbUser = JSON.parse(dbUserResult) as User 
             return {  //then we are assigning the values of the existing user to the values of the returned JSON web token
                 id: dbUser.id,
                 name: dbUser.name,
@@ -111,8 +116,8 @@ export const authOptions: NextAuthOptions = {
                 picture:dbUser.image,
             }
         },
-        async session({session, token}) { // the session function return the session object which is used to determined whether the user is alredy signed in or not
-            if(token) { // assigning the token values corresponding to the user data to the session values 
+        async session({session, token}) { 
+            if(token) { 
                 session.user.id = token.id;
                 session.user.name = token.name;
                 session.user.email = token.email;

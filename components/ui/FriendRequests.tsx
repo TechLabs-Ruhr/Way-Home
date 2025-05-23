@@ -1,11 +1,8 @@
 "use client"
-import { pusherClient } from '@/lib/pusher'
-import { toPusherKey } from '@/lib/validations/utils'
 import axios from 'axios'
-import { log } from 'console'
 import { useRouter } from 'next/navigation'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 interface FriendRequestsProps {
   incomingFriendRequests: IncomingFriendRequest[]
@@ -21,22 +18,6 @@ const FriendRequests: FC<FriendRequestsProps> = ({
         incomingFriendRequests
     )
 
-    useEffect(() => {
-        pusherClient.subscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`)) // we use the helper function to bypass the colon  that is invalid inside the subscribe method
-
-
-        const friendRequestHandler = ({senderId, senderEmail}: IncomingFriendRequest) => {
-            console.log("new friend request ")
-            setFriendRequests((prev) => [...prev, {senderId, senderEmail}]) // get access to the friend request in real time 
-        }
-        pusherClient.bind('incoming_friend_requests', friendRequestHandler)
-
-        return () => {
-            pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`)) // we use the helper function to bypass the colon  that is invalid inside the subscribe method
-            pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
-
-        }
-    }, []) // this doesn't work right now have to debug it later 6:24:40 
     
     const acceptFriend = async (senderId: string) => { 
         await axios.post('/api/friends/accept', {id: senderId}) 

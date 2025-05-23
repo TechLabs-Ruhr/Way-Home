@@ -3,7 +3,6 @@ import Link from 'next/link'
 import {signIn} from "next-auth/react"
 import { FC, FormEvent, useState } from 'react'
 import {toast} from 'react-hot-toast'
-import NavBarSignIn from '@/components/ui/navbarSignIn'
 
 
 interface pageProps {}
@@ -13,19 +12,19 @@ const Page: FC<pageProps> = ({}) => {
   const [isLoadingGitHub, setIsLoadingGitHub] = useState<boolean>(false)
 
   async function loginWithGoogle() {
-    setIsLoadingGoogle(true) // replace provider icon with spinning loading icon 
+    setIsLoadingGoogle(true) 
     try{
-      await signIn('google') // initiate provider authentication process
+      await signIn('google') 
     }catch(error) {
-      toast.error(toast.error(`Sign in failed: ${error}`)) //provide feedback on the authentication process if there is an error
+      toast.error(toast.error(`Sign in failed: ${error}`)) 
     } 
   }
   async function loginWithGithub() {
-    setIsLoadingGitHub(true) // replace provider icon with spinning loading icon 
+    setIsLoadingGitHub(true) 
     try{
-      await signIn('github')  // initiate provider authentication process
+      await signIn('github')  
     }catch(error) {
-      toast.error(`Sign in failed: ${error}`) //provide feedback on the authentication process if there is an error
+      toast.error(`Sign in failed: ${error}`) 
     } 
   }
 

@@ -5,30 +5,27 @@ import { addFriendValidator } from "@/lib/validations/add-friend"
 import { getServerSession } from "next-auth"
 import {z} from "zod"
 import fetchUserByEmail from '@/app/helpers/fetchUsersByEmail';
-import { pusherServer } from '@/lib/pusher'
-import { toPusherKey } from '@/lib/validations/utils'
+
 
 export async function POST(req: Request) {
     try {
         const body = await req.json()
 
-        const {email: emailToAdd} = addFriendValidator.parse(body.email) // if this parse fails a z error is going to be thrown
-
+        //email validation
+        const {email: emailToAdd} = addFriendValidator.parse(body.email) 
     
         const idToAdd = (await fetchRedis('get', `user:email:${emailToAdd}`)) as string
-    
 
         if(!idToAdd) {
             return new Response('This person does not exist', {status: 400} )
         }
 
-
+        //check if the user is logged in
         const session = await getServerSession(authOptions)
 
         if(!session) {
             return new Response('Unauthorized', {status: 401})
         }
-        
 
         if(idToAdd === session.user.id) {
             return new Response('You cannot add yourself as a friend', {
@@ -45,25 +42,15 @@ export async function POST(req: Request) {
 
           //check if user is already in the friends list 
           const isAlreadyFriends = (await fetchRedis(
-            'sismember', `user:${session.user.id}:friends`, // we are checking in the friends list of the user who is already logged in whtether the id to add already exists 
+            'sismember', `user:${session.user.id}:friends`, 
             idToAdd
         )) as 0 | 1
 
         if (isAlreadyFriends) {
             return new Response('Already Friends with this user')
         }
-
-        //valid request, send friend request
-        pusherServer.trigger(
-            toPusherKey(`user${idToAdd}:incoming_friend_requests`),
-             'incoming_friend_requests', // actual function named that we're triggering
-            {
-                senderId:session.user.id,
-                senderEmail: session.user.email,
-            } 
-        )
         
-          db.sadd(`user${idToAdd}:incoming_friend_requests`, session.user.id)
+        db.sadd(`user${idToAdd}:incoming_friend_requests`, session.user.id)
 
           return new Response("OK")
 
